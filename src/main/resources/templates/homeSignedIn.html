@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{view.index.title}">Welcome!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
+    
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="container">
+   
+   
+   <div class="panel-group" style="margin-top:40px">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<span th:utext="${userName}"></span>
+				</div>
+				<div class="panel-body">
+					 <table>
+					
+					 </table>
+				</div>
+				
+			</div>
+		</div>
+		
+   
+</div>
+
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+</body>
+</html>

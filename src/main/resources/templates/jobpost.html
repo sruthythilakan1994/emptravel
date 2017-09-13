@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{view.index.title}">Welcome!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
+    
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+
+
+<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/registration}"
+					th:object="${job}" method="post" class="form-horizontal"
+					role="form">
+					
+					<h2>Job Opening </h2>
+					<br/><br/>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{title}" placeholder="Job Title"
+								class="form-control" /> 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{description}" placeholder="Job Description"
+								class="form-control" /> 
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label	th:if="${#fields.hasErrors('minExp')}" th:errors="*{minExp}"
+								class="validation-message"></label>
+							<input type="text" th:field="*{minExp}"
+								placeholder="Last Name" class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{maxExp}" placeholder="maxExp"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('maxExp')}" th:errors="*{maxExp}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+						
+					   <select class="form-control" aria-describedby="status-addon" id="assignedUser" name="assignedUser" th:field="*{designation}">                 
+                		 	<option   th:value="Developer" th:text="Developer"></option>
+                		 	<option   th:value="Developer" th:text="Tester"></option>
+                		   	<option   th:value="Developer" th:text="Manager"></option>
+           			   </select>
+					
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{duration}" placeholder="Duration (Months)"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"
+								class="validation-message"></label>
+						</div>
+					</div>
+										
+						
+
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">POST JOB</button>
+						</div>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+
+
+					<br/><br/><br/><br/>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+<hr>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+</body>
+</html>
+
