@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Job {
@@ -14,14 +18,19 @@ public class Job {
 	@Column(name="job_id")
 	int id;
 	
+	@NotEmpty(message = "*Please provide a title")
 	String title;
 	
+	
+	@NotEmpty(message = "*Please provide a title")
 	String description;
 	
 	int minExp;
 	
 	int maxExp;
 	
+	
+	@NotEmpty(message = "*Please provide a title")
 	String designation;
 	
 	int duration;
@@ -30,7 +39,7 @@ public class Job {
 		super();
 	}
 
-	public Job(int id, String title, String description, int yearOfexperiance) {
+	public Job(int id, String title, String description) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -94,7 +103,5 @@ public class Job {
 		this.duration = duration;
 	}
 
-	
-	
 	
 }

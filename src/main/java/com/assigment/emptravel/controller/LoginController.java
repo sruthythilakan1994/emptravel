@@ -15,15 +15,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import com.assigment.emptravel.model.User;
-
+import com.assigment.emptravel.service.JobService;
 import com.assigment.emptravel.service.UserService;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller("loginController")
 public class LoginController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);	
+	
+	
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	JobService jobService;
+
 	
 	@RequestMapping(value={ "/","/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -44,12 +54,15 @@ public class LoginController {
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+		
+		
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {	
 			bindingResult
 					.rejectValue("email", "error.user",
 							"User with this email already exists");
+			logger.warn("Triing to create user name same name ");
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
@@ -67,14 +80,26 @@ public class LoginController {
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public ModelAndView home(){
+		
+		logger.info("#############################");
+		logger.info("START - Home page ");
+		
 		//List<Project> aaa= new ArrayList();
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
+	
+		logger.debug("Username ="+  user.getName() );
+		logger.debug("Username ="+  user.getEmail()  );
+		
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-		//modelAndView.addObject("projects", projectService.findAll());
+		modelAndView.addObject("jobs", jobService.findAll());
 		modelAndView.setViewName("/homeSignedIn");
+		
+		logger.info("User entred Home page ");
+		logger.info("START - Home page ");
+		
 		return modelAndView;
 	}
 	

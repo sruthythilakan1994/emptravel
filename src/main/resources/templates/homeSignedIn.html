@@ -20,9 +20,29 @@
 					<span th:utext="${userName}"></span>
 				</div>
 				<div class="panel-body">
-					 <table>
 					
-					 </table>
+				<div class="panel-body">
+					 <table class="table table-hover">
+					 
+					 <tr>
+        				<th>#</th>
+        				<th>Title</th>
+        				<th>Description</th>
+        				<th></th>
+
+      			     </tr>
+      			      
+					 <tr th:each="job : ${jobs}">
+       						 <td th:text="${job.id}">Id</td>  
+        					 <td th:text="${job.title}">Title</td>
+        					 <td th:text="${job.description}">Title</td>
+        					 <td><a href="#" th:href="@{'/jobpost/view/' + ${job.id}}">Show Details</a> </td>
+        			 </tr>
+        			
+    				 </table>
+				</div>
+				
+					
 				</div>
 				
 			</div>
