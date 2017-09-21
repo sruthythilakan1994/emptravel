@@ -13,17 +13,16 @@
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
    
-   
    <div class="panel-group" style="margin-top:40px">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<span th:utext="${userName}"></span>
+					Pending Action</span>
 				</div>
 				<div class="panel-body">
 					
 				<div class="panel-body">
 					
-					 Applicable Jobs
+					
 					 <table class="table table-hover">
 					 
 					 <tr>
@@ -34,7 +33,45 @@
 
       			     </tr>
       			      
-					 <tr th:each="job : ${jobs}">
+					 <tr th:each="job : ${pending}">
+       						 <td th:text="${job.id}">Id</td>  
+        					 <td th:text="${job.title}">Title</td>
+        					 <td th:text="${job.description}">Description</td>
+        					 <td><a href="#" th:href="@{'/pendingview/' + ${job.id}}">Show Details</a> </td>
+        			 </tr>
+        			 
+        			
+    				 </table>
+				</div>
+				
+				</div>
+				
+			</div>
+		</div>
+		
+
+
+<div class="panel-group" style="margin-top:40px">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					Approved Candidate</span>
+				</div>
+				<div class="panel-body">
+					
+				<div class="panel-body">
+					
+					
+					 <table class="table table-hover">
+					 
+					 <tr>
+        				<th>#</th>
+        				<th>Title</th>
+        				<th>Description</th>
+        				<th></th>
+
+      			     </tr>
+      			      
+					 <tr th:each="job : ${approved}">
        						 <td th:text="${job.id}">Id</td>  
         					 <td th:text="${job.title}">Title</td>
         					 <td th:text="${job.description}">Description</td>
@@ -45,39 +82,57 @@
     				 </table>
 				</div>
 				
+				</div>
 				
+			</div>
+		</div>
+
+
+
+
+<div class="panel-group" style="margin-top:40px">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					Rejected</span>
+				</div>
 				<div class="panel-body">
-				
-					 Applied Job
+					
+				<div class="panel-body">
+					
+					
 					 <table class="table table-hover">
 					 
 					 <tr>
         				<th>#</th>
         				<th>Title</th>
         				<th>Description</th>
-        				<th>Status</th>
         				<th></th>
+
       			     </tr>
       			      
-					 <tr th:each="job : ${appliedjobs}">
+					 <tr th:each="job : ${rejected}">
        						 <td th:text="${job.id}">Id</td>  
         					 <td th:text="${job.title}">Title</td>
         					 <td th:text="${job.description}">Description</td>
-        					 <td th:text="${job.status}">Status</td>
-        					 <td><a href="#" th:href="@{'/appliedjobs/' + ${job.id}}">Show Details</a> </td>
+        					 <td><a href="#" th:href="@{'/pendingview/' + ${job.id}}">Show Details</a> </td>
         			 </tr>
         			 
         			
     				 </table>
 				</div>
 				
-				
-					
 				</div>
 				
 			</div>
 		</div>
-		
+
+
+
+
+
+
+
+
    
 </div>
 

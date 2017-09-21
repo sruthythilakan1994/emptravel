@@ -95,6 +95,7 @@ public class LoginController {
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.addObject("jobs", jobService.findAll());
+		modelAndView.addObject("appliedjobs", user.getJobs());
 		modelAndView.setViewName("/homeSignedIn");
 		
 		logger.info("User entred Home page ");

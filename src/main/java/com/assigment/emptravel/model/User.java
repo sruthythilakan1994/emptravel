@@ -74,7 +74,27 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
-	public long getId() {
+	
+	//@ManyToMany(cascade = CascadeType.ALL)
+	//@JoinTable(name = "user_job", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
+	@ManyToMany(cascade = CascadeType.ALL)
+	//@JoinTable(name = "user_job", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "job_id", referencedColumnName = "id"))
+@JoinTable(name = "user_job1", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
+	
+	Set<Job> jobs;
+	
+	
+	
+	public Set<Job> getJobs() {
+		return jobs;
+	}
+	
+
+	public void setJobs(Set<Job> jobs) {
+		this.jobs = jobs;
+	}
+
+		public long getId() {
 		return id;
 	}
 

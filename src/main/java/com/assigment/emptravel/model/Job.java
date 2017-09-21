@@ -1,10 +1,16 @@
 package com.assigment.emptravel.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
@@ -35,6 +41,32 @@ public class Job {
 	
 	int duration;
 	
+	@ManyToMany(mappedBy = "jobs")
+	Set<User> users;
+
+	
+	String status;
+	
+	
+	
+	 public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	
+
 	public Job() {
 		super();
 	}

@@ -17,12 +17,23 @@
 <div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/jobpost}"
-					th:object="${job}" method="post" class="form-horizontal"
+				<form autocomplete="off" action="#" th:action="@{/home}"
+					th:object="${job}" method="get" class="form-horizontal"
 					role="form">
 					
-					<h2>Job Opening </h2>
+					<h2>Job Application Status</h2>
 					<br/><br/>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label	class="validation-message">Job Id</label>
+						
+						<label th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{id}" placeholder="Job Id"
+								class="form-control" /> 
+						</div>
+					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
@@ -49,7 +60,6 @@
 					<div class="form-group">
 						<div class="col-sm-9">
 						<label	class="validation-message">Min Exp</label>
-						
 						<label	th:if="${#fields.hasErrors('minExp')}" th:errors="*{minExp}"
 								class="validation-message"></label>
 							<input type="text" th:field="*{minExp}"
@@ -58,9 +68,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
-						
 							<label	class="validation-message">Max Exp</label>
-						
 							<input type="text" th:field="*{maxExp}" placeholder="maxExp"
 								class="form-control" /> <label
 								th:if="${#fields.hasErrors('maxExp')}" th:errors="*{maxExp}"
@@ -71,15 +79,12 @@
 					
 					<div class="form-group">
 					   <div class="col-sm-9">
-					   
 					   <label	class="validation-message">Job Type</label>
-						
 					   <select class="form-control" aria-describedby="status-addon" id="assignedUser" name="assignedUser" th:field="*{designation}">                 
                 		 	<option   th:value="Developer" th:text="Developer"></option>
                 		 	<option   th:value="Developer" th:text="Tester"></option>
                 		   	<option   th:value="Developer" th:text="Manager"></option>
            			   </select>
-					
 						</div>
 					</div>
 					
@@ -96,17 +101,13 @@
 						</div>
 					</div>
 										
-						
-
 					<div class="form-group">
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">POST JOB</button>
+							<button type="submit" class="btn btn-primary btn-block">BACK TO HOME</button>
 						</div>
 					</div>
 					
 					<span th:utext="${successMessage}"></span>
-
-
 					<br/><br/><br/><br/>
 					
 				</form>
