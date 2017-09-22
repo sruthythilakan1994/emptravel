@@ -58,16 +58,15 @@
         				<th>Status</th>
         				<th></th>
       			     </tr>
-      			      
-					 <tr th:each="job : ${appliedjobs}">
-       						 <td th:text="${job.id}">Id</td>  
-        					 <td th:text="${job.title}">Title</td>
-        					 <td th:text="${job.description}">Description</td>
-        					 <td th:text="${job.status}">Status</td>
-        					 <td><a href="#" th:href="@{'/appliedjobs/' + ${job.id}}">Show Details</a> </td>
+      			  
+					 <tr th:each="jobInfo : ${appliedjobs}">
+       						 <td th:text="${jobInfo.id}">Id</td>  
+        					 <td th:text="${jobInfo.title}">Title</td>
+        					 <td th:text="${jobInfo.description}">Description</td>
+        					 <td th:text="${jobInfo.status}">Status</td>
+        					 <td><a href="#" th:href="@{'/appliedjobs/' + ${jobInfo.id}}">Show Details</a> </td>
         			 </tr>
         			 
-        			
     				 </table>
 				</div>
 				

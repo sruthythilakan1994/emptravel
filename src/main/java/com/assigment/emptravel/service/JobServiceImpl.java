@@ -1,4 +1,5 @@
 package com.assigment.emptravel.service;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,9 +10,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.assigment.emptravel.model.JobApplication;
+import com.assigment.emptravel.model.ApplicationInfo;
 import com.assigment.emptravel.model.Job;
 import com.assigment.emptravel.model.Role;
 import com.assigment.emptravel.model.User;
+import com.assigment.emptravel.repository.ApplicationRepository;
 import com.assigment.emptravel.repository.JobRepository;
 import com.assigment.emptravel.repository.RoleRepository;
 import com.assigment.emptravel.repository.UserRepository;
@@ -27,6 +31,8 @@ public class JobServiceImpl implements JobService{
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private ApplicationRepository applicationRepository;
 	
 	@Override
 	public void saveJob(Job job) {
@@ -47,28 +53,40 @@ public class JobServiceImpl implements JobService{
 	@Transactional
 	@Override
 	public boolean applyJob(User user, Job job) {
-		user.getJobs().add(job);
+		
+		JobApplication application = new JobApplication();
+		application.setJob(job);
+		application.setUser(user);
+		application.setStatus("PENDING");
+		
+		applicationRepository.save(application);
+		
+		user.getApplications().add(application);
 		userRepository.save(user);
 		
-		job.getUsers().add(user);
+		job.getApplications().add(application);
 		jobRepository.save(job);
 		
 		return true;
 	}
 
+	public JobApplication getApplication (int id){
+		return applicationRepository.findOne(id);
+	}
+	
 	@Override
-	public List<Job> getAllPendingApplication() {
-		return jobRepository.findByStatus("PENDING");
+	public List<JobApplication> getAllPendingApplication() {
+		return applicationRepository.findByStatus("PENDING");
 	}
 
 	@Override
-	public List<Job> getAllApprovedApplication() {
-		return jobRepository.findByStatus("APPROVED");
+	public List<JobApplication> getAllApprovedApplication() {
+		return applicationRepository.findByStatus("APPROVED");
 	}
 
 	@Override
-	public List<Job> getAllRejectedApplication() {
-		return jobRepository.findByStatus("REJECTED");
+	public List<JobApplication> getAllRejectedApplication() {
+		return applicationRepository.findByStatus("REJECTED");
 	}
 	
 	

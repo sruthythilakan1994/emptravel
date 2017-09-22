@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
@@ -76,25 +77,24 @@ public class User {
 
 	
 	//@ManyToMany(cascade = CascadeType.ALL)
-	//@JoinTable(name = "user_job", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
-	@ManyToMany(cascade = CascadeType.ALL)
-	//@JoinTable(name = "user_job", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "job_id", referencedColumnName = "id"))
-@JoinTable(name = "user_job1", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
+	//@JoinTable(name = "user_job1", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
+	//Set<Job> jobs;
 	
-	Set<Job> jobs;
-	
+	@OneToMany (mappedBy="user")
+	Set<JobApplication> applications;
 	
 	
-	public Set<Job> getJobs() {
-		return jobs;
-	}
 	
-
-	public void setJobs(Set<Job> jobs) {
-		this.jobs = jobs;
+	
+	public Set<JobApplication> getApplications() {
+		return applications;
 	}
 
-		public long getId() {
+	public void setApplications(Set<JobApplication> applications) {
+		this.applications = applications;
+	}
+
+	public long getId() {
 		return id;
 	}
 

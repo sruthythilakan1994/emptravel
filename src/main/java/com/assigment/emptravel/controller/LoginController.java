@@ -1,6 +1,7 @@
 package com.assigment.emptravel.controller;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.assigment.emptravel.model.JobApplication;
+import com.assigment.emptravel.model.Job;
+import com.assigment.emptravel.model.JobInfo;
 import com.assigment.emptravel.model.User;
 import com.assigment.emptravel.service.JobService;
 import com.assigment.emptravel.service.UserService;
@@ -95,7 +98,20 @@ public class LoginController {
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.addObject("jobs", jobService.findAll());
-		modelAndView.addObject("appliedjobs", user.getJobs());
+		
+		Set<JobApplication> applications= user.getApplications();
+		List<JobInfo> appliedJobList = new ArrayList<JobInfo>();
+		for ( JobApplication application : applications ){
+			Job job= application.getJob();
+			JobInfo jobInfo= new JobInfo();
+			jobInfo.setId(application.getId());
+			jobInfo.setTitle(job.getTitle());
+			jobInfo.setStatus(application.getStatus());
+			jobInfo.setDescription(job.getDescription());
+			appliedJobList.add(jobInfo);
+		}
+		
+		modelAndView.addObject("appliedjobs", appliedJobList);
 		modelAndView.setViewName("/homeSignedIn");
 		
 		logger.info("User entred Home page ");

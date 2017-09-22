@@ -85,75 +85,7 @@ public class JobPostController {
 		}
 		return modelAndView;
 	}
-		
-	
-	
-	@RequestMapping(value="/jobpost/apply", method = RequestMethod.POST)
-	public ModelAndView applyJob(Job job, BindingResult bindingResult){
-		ModelAndView modelAndView = new ModelAndView();
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		jobService.applyJob(user, jobService.findById(job.getId()));
-		
-		modelAndView.addObject("successMessage", "Job has been created successfully.");
-		modelAndView.setViewName("/jobpost");
-		
-		return modelAndView;
-	}
-	
-	
-
-	@RequestMapping(value="/appliedjobs/{id}", method = RequestMethod.GET)
-	public ModelAndView viewJobStatus( @PathVariable int id){
-		
-		ModelAndView modelAndView = new ModelAndView();
-		Job job = jobService.findById(id);
-		modelAndView.addObject("job", job);
-		modelAndView.setViewName("/appliedJobStatus");
-		return modelAndView;
-		
-	}
-	
-	
-	@RequestMapping(value="/jobapplications", method = RequestMethod.GET)
-	public ModelAndView approveApplication(){
-		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("pending", jobService.getAllPendingApplication());
-		modelAndView.addObject("approved", jobService.getAllApprovedApplication());
-		modelAndView.addObject("rejected", jobService.getAllRejectedApplication());
-		modelAndView.setViewName("/jobapplications");
-		return modelAndView;
-		
-	}
-	
-	
-	@RequestMapping(value="/pendingview/{id}", method = RequestMethod.GET)
-	public ModelAndView actonapplictaion( @PathVariable int id){
-		
-		ModelAndView modelAndView = new ModelAndView();
-		Job job = jobService.findById(id);
-		modelAndView.addObject("job", job);
-		modelAndView.setViewName("/pendingview");
-		return modelAndView;
-		
-	}
-	
-	
-	@RequestMapping(value="/pendingaction", method = RequestMethod.POST)
-	public ModelAndView approveOrRejectApplication(Job job, BindingResult bindingResult){
-		ModelAndView modelAndView = new ModelAndView();
-		Job jobToBeUpdated = jobService.findById(job.getId());
-		//jobService.applyJob(user, jobService.findById(job.getId()));
-		
-		modelAndView.addObject("successMessage", "Job has been created successfully.");
-		modelAndView.setViewName("/jobpost");
-		
-		return modelAndView;
-	}
-	
-	
+			
 	
 	
 	

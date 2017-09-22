@@ -17,77 +17,23 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Entity
-public class Job {
+public class JobInfo {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="job_id")
 	int id;
 	
-	@NotEmpty(message = "*Please provide a title")
 	String title;
-	
-	
-	@NotEmpty(message = "*Please provide a title")
+
 	String description;
 	
 	int minExp;
 	
 	int maxExp;
 	
-	@OneToMany(mappedBy="job")
-	Set<JobApplication> applications;
-	
-	@NotEmpty(message = "*Please provide a title")
 	String designation;
 	
 	int duration;
 	
-	//@ManyToMany(mappedBy = "jobs")
-	//Set<User> users;
-	
 	String status;
-	
-	public Set<JobApplication> getApplications() {
-		return applications;
-	}
-
-	public void setApplications(Set<JobApplication> applications) {
-		this.applications = applications;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	/*
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
-*/
-	
-
-	public Job() {
-		super();
-	}
-
-	public Job(int id, String title, String description) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-	
-	}
 
 	public int getId() {
 		return id;
@@ -145,5 +91,15 @@ public class Job {
 		this.duration = duration;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
+	
+	
+		
 }
