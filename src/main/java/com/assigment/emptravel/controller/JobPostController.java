@@ -14,9 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.assigment.emptravel.model.Job;
+import com.assigment.emptravel.model.JobApplication;
+import com.assigment.emptravel.model.JobInfo;
+import com.assigment.emptravel.model.JobSkill;
+import com.assigment.emptravel.model.Skill;
 import com.assigment.emptravel.model.User;
 import com.assigment.emptravel.repository.JobRepository;
 import com.assigment.emptravel.service.JobService;
+import com.assigment.emptravel.service.JobSkillService;
+import com.assigment.emptravel.service.SkillService;
 import com.assigment.emptravel.service.UserService;
 
 @Controller
@@ -28,7 +34,11 @@ public class JobPostController {
 	@Autowired
 	UserService userService;
 	
-
+	@Autowired
+	SkillService skillService;
+	@Autowired
+	JobSkillService jobSkillService;
+	
 	@RequestMapping(value="/jobpost")
 	public ModelAndView job(){
 		ModelAndView mv= new ModelAndView("jobpost");
@@ -44,12 +54,39 @@ public class JobPostController {
 			modelAndView.setViewName("jobpost");
 		} else {
 			jobService.saveJob(job);
-			modelAndView.addObject("successMessage", "Job has been created successfully.");
-			modelAndView.setViewName("/jobpost");
+			//modelAndView.addObject("successMessage", "Job has been created successfully.");
+			//modelAndView.setViewName("/jobpost");
+			
+			 modelAndView.setViewName("jobSkill");
+			    JobSkill skill = new JobSkill();
+			    skill.setJob(job);
+			    modelAndView.addObject("jobSkill", skill);
+			    modelAndView.addObject("skills", skillService.findAll());
+			
 		}
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/jobskill/add", method = RequestMethod.POST)
+	public ModelAndView addSkill(@Valid JobSkill jobSkill, BindingResult bindingResult ) {
+		ModelAndView modelAndView = new ModelAndView();
+		if (bindingResult.hasErrors()) {
+			modelAndView.setViewName("jobSkill");
+		} else {
+			
+			Job job = jobService.findById(jobSkill.getJob().getId());
+			Skill skill = skillService.findSkillById(Integer.parseInt(jobSkill.getTechnicalSkills()));
+			skillService.addSkill( jobSkill, job , skill);
+			
+			//skillService.saveSkill(skill);
+			modelAndView.addObject("successMessage", "skill has been created successfully.");
+			modelAndView.setViewName("jobSkill");
+			modelAndView.addObject("JobSkill", jobSkill);
+			modelAndView.addObject("skills", skillService.findAll());
+			modelAndView.addObject("JobSkills", job.getSkill());
+		}
+		return modelAndView;
+	}
 	
 	@RequestMapping(value="/jobpost/view/{id}", method = RequestMethod.GET)
 	public ModelAndView viewJob( @PathVariable int id){
@@ -73,6 +110,7 @@ public class JobPostController {
 	
 	
 	
+	
 	@RequestMapping(value="/jobpost/update", method = RequestMethod.POST)
 	public ModelAndView updateJob(@Valid Job job, BindingResult bindingResult){
 		ModelAndView modelAndView = new ModelAndView();
@@ -86,7 +124,6 @@ public class JobPostController {
 		return modelAndView;
 	}
 			
-	
 	
 	
 	

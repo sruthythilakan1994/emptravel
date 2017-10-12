@@ -37,6 +37,9 @@ public class LoginController {
 	@Autowired
 	JobService jobService;
 
+
+	private Object applications;
+
 	
 	@RequestMapping(value={ "/","/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -46,16 +49,51 @@ public class LoginController {
 	}
 	
 	
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
-	public ModelAndView registration(){
+	@RequestMapping(value="/registration1", method = RequestMethod.GET)
+	public ModelAndView registration1(){
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
 		modelAndView.addObject("user", user);
-		modelAndView.setViewName("registration");
+		modelAndView.setViewName("registration1");
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	@RequestMapping(value = "/profile")
+	public ModelAndView viewProfile() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		ModelAndView mv = new ModelAndView("profile");
+		
+		mv.addObject("user", user);
+		return mv;
+	}
+	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
+	public ModelAndView createNewUser1(@Valid User user, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("updateprofile");
+		
+		User userExists = userService.findUserByEmpId(user.getEmpId());
+		
+		userExists.setEmpId(user.getEmpId());
+		//userExists.setDesignation(user.getDesignation());
+		//userExists.setQualification(user.getQualification());
+		//userExists.setExpYears(user.getExpYears());
+		userExists.setName(user.getName());
+		userExists.setLastName(user.getLastName());
+		userExists.setEmail(user.getEmail());
+		userExists.setPassword(user.getPassword());
+		userExists.setAddress(user.getAddress());
+		userExists.setAccountNumber(user.getAccountNumber());
+		//userExists.setPhoneNumber(user.getPhoneNumber());
+		
+		
+		
+		userService.saveUser(userExists);
+	
+		return modelAndView;
+}
+
+	@RequestMapping(value = "/registration1", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
 		
 		
@@ -68,13 +106,16 @@ public class LoginController {
 			logger.warn("Triing to create user name same name ");
 		}
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("registration");
+			modelAndView.setViewName("registration1");
 		} else {
+			
+			user.setDesignation("NA");
+			user.setQualification("NA");
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully.Please <a href='/login'> login </a> with ");
 			//modelAndView.addObject("user", new User());
 			//modelAndView.setViewName("registration");
-			modelAndView.setViewName("/registration");
+			modelAndView.setViewName("/registration1");
 			
 			
 		}
@@ -121,6 +162,21 @@ public class LoginController {
 	}
 	
 	
+	@RequestMapping(value = "/appliedjob")
+	   public ModelAndView appliedJob() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		     ModelAndView mv= new ModelAndView("appliedJob");
+		         Job job = new Job();
+		
+		           mv.addObject("jobs", jobService.findAll());
+		              Set<JobApplication> applications= user.getApplications();
+		                mv.addObject("appliedjobs",user.getApplications());
+		                
+		                   return mv;
+		
+	}	
 	
-
 }
+
+	

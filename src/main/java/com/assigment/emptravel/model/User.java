@@ -60,9 +60,29 @@ public class User {
 	
 
 	@Column(name = "designation")
-	@NotEmpty(message = "*Please provide your designation")
+	//@NotEmpty(message = "*Please provide your designation")
 	private String designation;
+
+	@Column(name = "qualification")
+	//@NotEmpty(message = "*Please provide your qualification")
+	private String qualification;
 	
+	@Column(name = "address")
+	//@NotEmpty(message = "*Please provide your address")
+	private String address;
+	
+	/*@Column(name = "Phone_number")
+	@NotEmpty(message = "*Please provide your phone number")
+	private int phoneNumber;*/
+	
+
+	@Column(name = "account_number")
+	//@NotEmpty(message = "*Please provide your last name")
+	private String accountNumber;
+	
+
+	
+
 	@Column(name = "exp_years")
 	private int expYears;
 	
@@ -84,8 +104,20 @@ public class User {
 	Set<JobApplication> applications;
 	
 	
+	@OneToMany(mappedBy="user")
+	Set<SkillSet> skills ;
+
 	
 	
+	
+	public Set<SkillSet> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(Set<SkillSet> skills) {
+		this.skills = skills;
+	}
+
 	public Set<JobApplication> getApplications() {
 		return applications;
 	}
@@ -97,6 +129,8 @@ public class User {
 	public long getId() {
 		return id;
 	}
+
+	
 
 	public void setId(long id) {
 		this.id = id;
@@ -157,7 +191,15 @@ public class User {
 	public void setEmpId(String empId) {
 		this.empId = empId;
 	}
+    
+	public String getAddress() {
+		return address;
+	}
 
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 	public String getDesignation() {
 		return designation;
 	}
@@ -165,6 +207,34 @@ public class User {
 	public void setDesignation(String designation) {
 		this.designation = designation;
 	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
+	
+	/*
+
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+*/
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	
 
 	public int getExpYears() {
 		return expYears;

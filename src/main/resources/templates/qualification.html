@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{view.index.title}">Welcome!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
+
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/skillset}"
+					th:object="${skillset}" method="POST" class="form-horizontal"
+					role="form">
+
+					<h2>Qualification</h2>
+					<br />
+					<br />
+					<div class="form-group">
+						<div class="col-sm-9">
+							Employee Id<input type="text" th:field="*{empId}"
+								placeholder="Employee Id" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							First Name<input type="text" th:field="*{name}"
+								placeholder="First Name" class="form-control" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+							Last Name<input type="text" th:field="*{lastName}"
+								placeholder="Last Name" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							Email<input type="text" th:field="*{email}" placeholder="Email"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="validation-message"></label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+
+
+							Qualification<input type="text" th:field="*{qualification}"
+								placeholder="Qualification" class="form-control" />
+						</div>
+					</div>
+
+					 	<div class="form-group">
+				  	  <div class="col-sm-9">
+						Technical Skills<input type="text" th:field="*{technicalSkills}" placeholder="Technical Skills"
+								class="form-control" /> 
+						</div>
+					</div>    
+					
+                    <div class="form-group">
+				  	  <div class="col-sm-9">
+						Work Experience<input type="text" th:field="*{workExperience}" placeholder="Work Experience"
+								class="form-control" /> 
+						</div>
+					</div>    
+                    
+                  
+					 	<div class="form-group">
+				  	  <div class="col-sm-9">
+						Skill Experience<input type="text" th:field="*{skillexperience}" placeholder="TSkill Experience"
+								class="form-control" /> 
+						</div>
+					</div>    
+				</form>
+
+
+			</div>
+
+			<hr>
+			<div th:replace="fragments/footer :: footer">&nbsp;</div>
+</body>
+</html>

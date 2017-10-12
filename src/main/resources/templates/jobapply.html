@@ -17,59 +17,61 @@
 <div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/jobpost/apply}"
+				<form autocomplete="off" action="#" th:action="@{//jobpost/view/}"
 					th:object="${job}" method="post" class="form-horizontal"
 					role="form">
 					
-					<h2>Apply Job Opening </h2>
+					<h2>JOB DETAILS</h2>
 					<br/><br/>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	class="validation-message">Job Id</label>
-						
+						<label	class="validation-message">Job Id :</label>
+						<label th:text = "${job.Id}"	class="validation-message"></label>
 						<label th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
 								class="validation-message"></label>
-						<input type="text" th:field="*{id}" placeholder="Job Id"
+						<input type="hidden" th:field="*{id}" 
 								class="form-control" /> 
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	class="validation-message">Job Title</label>
-						
+						<label	class="validation-message">Job Title :</label>
+						<label th:text = "${job.Title}"	class="validation-message"></label>
 						<label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
 								class="validation-message"></label>
-						<input type="text" th:field="*{title}" placeholder="Job Title"
+						<input type="hidden" th:field="*{title}" placeholder="Job Title"
 								class="form-control" /> 
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	class="validation-message">Job Description</label>
-						
+						<label	class="validation-message">Job Description :</label>
+						<label th:text = "${job.Description}"	class="validation-message"></label>
 						<label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
 								class="validation-message"></label>
-						<input type="text" th:field="*{description}" placeholder="Job Description"
+						<input type="hidden" th:field="*{description}" placeholder="Job Description"
 								class="form-control" /> 
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	class="validation-message">Min Exp</label>
+						<label	class="validation-message">Min Exp  :</label>
+						<label th:text = "${job.minExp}"	class="validation-message"></label>
 						<label	th:if="${#fields.hasErrors('minExp')}" th:errors="*{minExp}"
 								class="validation-message"></label>
-							<input type="text" th:field="*{minExp}"
+							<input type="hidden" th:field="*{minExp}"
 								placeholder="Last Name" class="form-control" /> 
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
-							<label	class="validation-message">Max Exp</label>
-							<input type="text" th:field="*{maxExp}" placeholder="maxExp"
+							<label	class="validation-message">Max Exp  :</label>
+							<label th:text = "${job.maxExp}"	class="validation-message"></label>
+							<input type="hidden" th:field="*{maxExp}" placeholder="maxExp"
 								class="form-control" /> <label
 								th:if="${#fields.hasErrors('maxExp')}" th:errors="*{maxExp}"
 								class="validation-message"></label>
@@ -79,7 +81,8 @@
 					
 					<div class="form-group">
 					   <div class="col-sm-9">
-					   <label	class="validation-message">Job Type</label>
+					   <label	class="validation-message">Job Type :</label>
+					   <label th:text = "${job.designation}"	class="validation-message"></label>
 					   <select class="form-control" aria-describedby="status-addon" id="assignedUser" name="assignedUser" th:field="*{designation}">                 
                 		 	<option   th:value="Developer" th:text="Developer"></option>
                 		 	<option   th:value="Developer" th:text="Tester"></option>
@@ -92,9 +95,9 @@
 						<div class="col-sm-9">
 						
 							<label	class="validation-message">Duration</label>
+						<label th:text = "${job.duration}"	class="validation-message"></label>
 						
-						
-							<input type="text" th:field="*{duration}" placeholder="Duration (Months)"
+							<input type="hidden" th:field="*{duration}" placeholder="Duration (Months)"
 								class="form-control" /> <label
 								th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"
 								class="validation-message"></label>

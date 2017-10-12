@@ -39,6 +39,9 @@ public class Job {
 	@OneToMany(mappedBy="job")
 	Set<JobApplication> applications;
 	
+	@OneToMany(mappedBy="job")
+	Set<JobSkill> skill;
+	
 	@NotEmpty(message = "*Please provide a title")
 	String designation;
 	
@@ -48,6 +51,8 @@ public class Job {
 	//Set<User> users;
 	
 	String status;
+	
+	
 	
 	public Set<JobApplication> getApplications() {
 		return applications;
@@ -143,6 +148,14 @@ public class Job {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+
+	public Set<JobSkill> getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Set<JobSkill> skill) {
+		this.skill = skill;
 	}
 
 	

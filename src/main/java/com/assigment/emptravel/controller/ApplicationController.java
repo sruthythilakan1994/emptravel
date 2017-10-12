@@ -1,5 +1,7 @@
 package com.assigment.emptravel.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +25,7 @@ public class ApplicationController {
 	@Autowired
 	JobService jobService;
 	
-	@Autowired
+	@Autowired 
 	UserService userService;
 	
 	@Autowired
@@ -92,7 +94,30 @@ public class ApplicationController {
 		
 		return modelAndView;
 	}
+	@RequestMapping(value="/updateprofile/{id}", method = RequestMethod.GET)
+	public ModelAndView updateProfile( @PathVariable Long id){
+		ModelAndView modelAndView = new ModelAndView();
+		User user = userService.findUserById( id);
+		modelAndView.addObject("user",user );
+		modelAndView.setViewName("/updateprofile");
+	
+		return modelAndView;
+	}
+	
+	/*@RequestMapping(value="/skillset",method = RequestMethod.GET)
+	public ModelAndView skillSet{
+		ModelAndView modelAndView = new ModelAndView();
+		//User user = userService.findUserById( id);
+		modelAndView.addObject("skill",skill );
+		modelAndView.setViewName("/skillset");
+	
+		return modelAndView;
+	*/
+	
+	}	
+	
+	
 	
 
 
-}
+

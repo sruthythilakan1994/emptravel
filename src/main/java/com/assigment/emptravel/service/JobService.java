@@ -23,5 +23,4 @@ public interface JobService {
 	public JobApplication getApplication (int id);
 	
 	
-	
 }
