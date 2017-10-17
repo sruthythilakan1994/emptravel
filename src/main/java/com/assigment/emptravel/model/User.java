@@ -81,6 +81,8 @@ public class User {
 	private String accountNumber;
 	
 
+	@Transient
+	private String assignedRole;
 	
 
 	@Column(name = "exp_years")
@@ -108,8 +110,34 @@ public class User {
 	Set<SkillSet> skills ;
 
 	
+	@OneToMany(mappedBy="user")
+	Set<Job> jobs;
+	
+	@ManyToMany(mappedBy="users")
+	Set<Tracker> trackers;
+	
+	@ManyToMany(mappedBy= "users")
+	Set<ExpenseTracker> expenseTracker;
 	
 	
+	
+	
+	public Set<ExpenseTracker> getExpenseTracker() {
+		return expenseTracker;
+	}
+
+	public void setExpenseTracker(Set<ExpenseTracker> expenseTracker) {
+		this.expenseTracker = expenseTracker;
+	}
+
+	public Set<Tracker> getTrackers() {
+		return trackers;
+	}
+
+	public void setTrackers(Set<Tracker> trackers) {
+		this.trackers = trackers;
+	}
+
 	public Set<SkillSet> getSkills() {
 		return skills;
 	}
@@ -250,6 +278,22 @@ public class User {
 
 	public void setPasswordConfirmed(String passwordConfirmed) {
 		this.passwordConfirmed = passwordConfirmed;
+	}
+
+	public String getAssignedRole() {
+		return assignedRole;
+	}
+
+	public void setAssignedRole(String assignedRole) {
+		this.assignedRole = assignedRole;
+	}
+
+	public Set<Job> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(Set<Job> jobs) {
+		this.jobs = jobs;
 	}
 	
 	

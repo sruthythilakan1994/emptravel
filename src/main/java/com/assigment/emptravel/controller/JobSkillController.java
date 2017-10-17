@@ -18,6 +18,7 @@ import com.assigment.emptravel.model.SkillSet;
 import com.assigment.emptravel.model.User;
 import com.assigment.emptravel.repository.SkillRepository;
 import com.assigment.emptravel.service.SkillService;
+import com.assigment.emptravel.util.Util;
 
 @Controller
 public class JobSkillController {
@@ -26,6 +27,8 @@ public class JobSkillController {
 	@Autowired
 	SkillRepository skillRepository;
 
+	@Autowired
+	Util util;
 	
 	@RequestMapping(value={ "/jobskill"}, method = RequestMethod.GET)
 	public ModelAndView jobskill(){
@@ -34,6 +37,7 @@ public class JobSkillController {
 	   JobSkill skill = new JobSkill();
 		mv.addObject("jobSkill", skill);
         mv.addObject("skills", skillService.findAll());
+        mv.addObject("role", util.getRole());
       
 		return mv;
 	

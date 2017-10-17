@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{view.index.title}">Welcome!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
+    
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="container">
+   <form autocomplete="off" action="#" th:action="@{/jobs/{id}}"
+					th:object="${jobs}" method="post" class="form-horizontal"
+					role="form">
+   
+   
+   <div class="panel-group" style="margin-top:40px">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<span th:utext="${userName}"></span>
+				</div>
+				<div class="panel-body">
+					
+					
+							<div class="panel-body">
+					
+					Posted Jobs
+					 <table class="table table-hover">
+					 
+					 <tr>
+        				<th>#</th>
+        				<th>Title</th>
+        				<th>Description</th>
+        				<th></th>
+
+      			     </tr>
+      			      
+					 <tr th:each="job : ${postedJobs}">
+       						 <td th:text="${job.id}">Id</td>  
+        					 <td th:text="${job.title}">Title</td>
+        					 <td th:text="${job.description}">Description</td>
+        					 <td><a href="#" th:href="@{'/jobs/' + ${job.id}}">Show Details</a> </td>
+        			 </tr>
+        			 
+        			
+    				 </table>
+				</div>	
+					
+					
+					
+					
+					
+				<div class="panel-body">
+					
+					Applicable Jobs
+					 <table class="table table-hover">
+					 
+					 <tr>
+        				<th>#</th>
+        				<th>Title</th>
+        				<th>Description</th>
+        				<th></th>
+
+      			     </tr>
+      			      
+					 <tr th:each="job : ${jobs}">
+       						 <td th:text="${job.id}">Id</td>  
+        					 <td th:text="${job.title}">Title</td>
+        					 <td th:text="${job.description}">Description</td>
+        					 <td><a href="#" th:href="@{'/jobpost/view/' + ${job.id}}">Show Details</a> </td>
+        			 </tr>
+        			 
+        			
+    				 </table>
+				</div>
+				
+		 	
+				<div class="panel-body">
+				
+					 Applied Job
+					 <table class="table table-hover">
+					 
+					 <tr>
+        				<th>#</th>
+        				<th>Title</th>
+        				<th>Description</th>
+        				<th>Status</th>
+        				<th></th>
+      			     </tr>
+      			  
+					 <tr th:each="jobInfo : ${appliedjobs}">
+       						 <td th:text="${jobInfo.id}">Id</td>  
+        					 <td th:text="${jobInfo.title}">Title</td>
+        					 <td th:text="${jobInfo.description}">Description</td>
+        					 <td th:text="${jobInfo.status}">Status</td>
+        					 <td><a href="#" th:href="@{'/appliedjobs/' + ${jobInfo.id}}">Show Details</a> </td>
+        			 </tr>
+        			 
+    				 </table>
+				</div> 
+				
+				
+					
+				</div>
+				</form>
+			</div>
+	
+	
+		
+   
+
+
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+</body>
+</html>

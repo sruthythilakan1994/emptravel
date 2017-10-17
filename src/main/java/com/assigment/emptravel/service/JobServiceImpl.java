@@ -3,8 +3,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,18 @@ public class JobServiceImpl implements JobService{
 		job.setStatus("PENDING");
 		jobRepository.save(job);
 	}
+	
+	@Override
+	public void saveJob(Job job, User user) {
+		job.setStatus("PENDING");
+		job.setUser(user);
+		jobRepository.save(job);
+		
+		user.getJobs().add(job);
+		userRepository.save(user);
+	}
+	
+	
 	
 	@Override
 	public List<Job> findAll() {
@@ -89,5 +102,10 @@ public class JobServiceImpl implements JobService{
 		return applicationRepository.findByStatus("REJECTED");
 	}
 	
+	public Set<JobApplication> getSortedApplication(Job job){
+		
+		//TODO - create list based on raking 
+		return job.getApplications();
+	}
 	
 }

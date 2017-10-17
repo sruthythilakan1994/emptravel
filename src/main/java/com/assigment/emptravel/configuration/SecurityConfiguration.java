@@ -12,10 +12,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private SimpleAuthenticationSuccessHandler successHandler;
+	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -31,27 +35,46 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
-		auth.
-			jdbcAuthentication()
+			
+			//auth.inMemoryAuthentication().withUser("aaaa").password("bbbb");
+		
+			auth.jdbcAuthentication()
 				.usersByUsernameQuery(usersQuery)
 				.authoritiesByUsernameQuery(rolesQuery)
 				.dataSource(dataSource)
 				.passwordEncoder(bCryptPasswordEncoder);
+			
+			
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-	
-		//http.authorizeRequests().anyRequest().permitAll();
+		
 		
 		http.
 		authorizeRequests()
 			.antMatchers("/").permitAll()
-			
-			
 			.antMatchers("/myhome").permitAll()
 			.antMatchers("/login").permitAll()
-			.antMatchers("/registration1").permitAll()
+			.antMatchers("/user/**").hasAuthority("USER").anyRequest().authenticated()
+			.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+			.authenticated().and().csrf().disable().formLogin()
+			.loginPage("/login").failureUrl("/login?error=true")
+			.successHandler(successHandler)			
+			.usernameParameter("email")
+			.passwordParameter("password")
+			.and().logout()
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutSuccessUrl("/").and().exceptionHandling()
+			.accessDeniedPage("/access-denied");
+		
+		/*
+		http.
+		authorizeRequests()
+			.antMatchers("/").permitAll()
+			.antMatchers("/myhome").permitAll()
+			.antMatchers("/login").permitAll()
+			.antMatchers("/user/**").hasAuthority("USER").anyRequest().authenticated()
 			.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
 			.authenticated().and().csrf().disable().formLogin()
 			.loginPage("/login").failureUrl("/login?error=true")
@@ -62,8 +85,37 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/").and().exceptionHandling()
 			.accessDeniedPage("/access-denied");
+	*/
 		
-		}
+		/*
+		http.
+			authorizeRequests()
+				.antMatchers("/").permitAll()
+				.antMatchers("/login").permitAll()
+				.antMatchers("/registration").permitAll()
+				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+				.authenticated().and().csrf().disable().formLogin()
+				.loginPage("/login").failureUrl("/login?error=true")
+				.defaultSuccessUrl("/admin/home")
+				.usernameParameter("email")
+				.passwordParameter("password")
+				.and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/").and().exceptionHandling()
+				.accessDeniedPage("/access-denied");
+				*/
+	}
+	
+	//@Override
+	protected void configure_xx(HttpSecurity http) throws Exception {
+		http.csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("**/login")).and().authorizeRequests()
+				.antMatchers("/admin").hasRole("ADMIN")
+				.antMatchers("/user").hasRole("USER")
+				.and().formLogin().usernameParameter("email")
+				.passwordParameter("password").successHandler(successHandler)
+				.loginPage("/login").and().logout().permitAll();
+	}
+	
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {

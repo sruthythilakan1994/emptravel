@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class JobApplication {
@@ -23,6 +24,9 @@ public class JobApplication {
 	@ManyToOne
 	@JoinColumn(name="job_id", nullable=false)
 	Job job;
+	
+	@OneToOne (mappedBy="jobApplication")
+	Tracker tracker;
 	
 	String status;
 	
@@ -66,6 +70,14 @@ public class JobApplication {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Tracker getTracker() {
+		return tracker;
+	}
+
+	public void setTracker(Tracker tracker) {
+		this.tracker = tracker;
 	}
 	
 	

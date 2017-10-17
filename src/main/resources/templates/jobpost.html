@@ -95,6 +95,19 @@
 								class="validation-message"></label>
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+						
+							<label	class="validation-message">Location</label>
+						
+						
+							<input type="text" th:field="*{location}" placeholder="Location"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('location')}" th:errors="*{location}"
+								class="validation-message"></label>
+						</div>
+					</div>
 										
 					<a href="#" th:href="@{'/jobskill/' }">Add Skills</a>	
 

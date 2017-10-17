@@ -78,6 +78,19 @@
 						</div>
 					</div>
 					
+					
+					<div class="form-group">
+					   <div class="col-sm-9">
+					   <label	class="validation-message">Role :</label>
+					 
+					   <select class="form-control" aria-describedby="status-addon" id="assignedRole" name="assignedRole" th:field="*{assignedRole}">                 
+                		 	<option   th:value="USER" th:text="USER"></option>
+                		 	<option   th:value="MANAGER" th:text="MANAGER"></option>
+                		   	<option   th:value="ADMIN" th:text="ADMIN"></option>
+           			   </select>
+						</div>
+					</div>
+					
 						
 
 					<div class="form-group">

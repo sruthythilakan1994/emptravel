@@ -21,28 +21,38 @@
                 </li>
                 
                  <li >
-                    <a href="#" th:href="@{/registration}">Register</a>
+                    <a href="#" th:if="${role eq 'ADMIN'}" th:href="@{/registration}">Register</a>
                 </li>
                 
                 <li >
-                    <a href="#" th:href="@{/profile}"> Profile</a>
+                    <a href="#" th:href="@{/updateprofile}">  Profile </a>
                 </li>
+                
                 <li >
-                    <a href="#" th:href="@{/appliedjob}">Applied Job</a>
+                    <a href="#" th:if="${role eq 'USER'}" th:href="@{/updateskillset}"> Skill </a>
+                </li>
+                
+                <li >
+                    <a href="#" th:if="${role eq 'USER'}" th:href="@{/appliedjob}">Applied Job</a>
                 </li>
                 <li>
-                    <a href="#" th:href="@{/jobpost}">Post Job</a>
+                    <a href="#" th:if="${role eq 'MANAGER'}" th:href="@{/jobpost}">Post Job</a>
                 </li>
                 
                 <li>
-                    <a href="#" th:href="@{/skill}">Skill</a>
+                    <a href="#" th:if="${role eq 'ADMIN'}" th:href="@{/skill}">Skill</a>
                 </li>
                 
                  <li>
-                    <a href="#" th:href="@{/jobapplications}">Applications</a>
+                    <a href="#" th:if="${role eq 'MANAGER'}" th:href="@{/jobapplications}">Applications</a>
                 </li>
-                
-                
+                   <li>
+                    <a href="#" th:href="@{/tasktracker}">Tracker</a>
+                </li>
+                 
+                     <li>
+                    <a href="#" th:href="@{/Expense}">Expense</a>
+                     </li>     
             </ul>
             <ul class="nav navbar-nav navbar-right">
             

@@ -9,4 +9,6 @@ public interface ApplicationService {
 	public JobApplication findApplicationById(int id);
 	public void saveApplication(JobApplication application);
 	public List<JobApplication> findAll();
+	
+	
 }

@@ -18,6 +18,7 @@ import com.assigment.emptravel.model.User;
 import com.assigment.emptravel.service.ApplicationService;
 import com.assigment.emptravel.service.JobService;
 import com.assigment.emptravel.service.UserService;
+import com.assigment.emptravel.util.Util;
 
 @Controller
 public class ApplicationController {
@@ -30,6 +31,10 @@ public class ApplicationController {
 	
 	@Autowired
 	ApplicationService applicationService;
+
+	@Autowired
+	Util util;
+	
 	
 	@RequestMapping(value="/jobpost/apply", method = RequestMethod.POST)
 	public ModelAndView applyJob(Job job, BindingResult bindingResult){
@@ -39,9 +44,9 @@ public class ApplicationController {
 		User user = userService.findUserByEmail(auth.getName());
 		jobService.applyJob(user, jobService.findById(job.getId()));
 		
-		modelAndView.addObject("successMessage", "Job has been created successfully.");
+		modelAndView.addObject("successMessage", "Job Applied successfully.");
 		modelAndView.setViewName("/jobapply");
-		
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 	
@@ -53,6 +58,7 @@ public class ApplicationController {
 		JobApplication application = jobService.getApplication(id);
 		modelAndView.addObject("job", application.getJob()); 
 		modelAndView.setViewName("/appliedJobStatus");
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 	
@@ -64,6 +70,7 @@ public class ApplicationController {
 		modelAndView.addObject("pending", jobService.getAllPendingApplication());
 		modelAndView.addObject("approved", jobService.getAllApprovedApplication());
 		modelAndView.addObject("rejected", jobService.getAllRejectedApplication());
+		modelAndView.addObject("role", util.getRole());
 		modelAndView.setViewName("/jobapplications");
 		return modelAndView;
 		
@@ -75,6 +82,7 @@ public class ApplicationController {
 		ModelAndView modelAndView = new ModelAndView();
 		JobApplication application = jobService.getApplication(id);
 		modelAndView.addObject("app", application);
+		modelAndView.addObject("role", util.getRole());
 		modelAndView.setViewName("/pendingview");
 		return modelAndView;
 	}
@@ -86,21 +94,17 @@ public class ApplicationController {
 		JobApplication appToBeUpdated = applicationService.findApplicationById(app.getId());
 		appToBeUpdated.setStatus(app.getStatus());
 		appToBeUpdated.setMessage(app.getMessage());
+		
+		
+		
+		
 		applicationService.saveApplication(appToBeUpdated);
 		modelAndView.addObject("successMessage", "Updated successfully.");
 		modelAndView.addObject("app", appToBeUpdated);
+		modelAndView.addObject("role", util.getRole());
 		modelAndView.setViewName("/pendingview");
 		
 		
-		return modelAndView;
-	}
-	@RequestMapping(value="/updateprofile/{id}", method = RequestMethod.GET)
-	public ModelAndView updateProfile( @PathVariable Long id){
-		ModelAndView modelAndView = new ModelAndView();
-		User user = userService.findUserById( id);
-		modelAndView.addObject("user",user );
-		modelAndView.setViewName("/updateprofile");
-	
 		return modelAndView;
 	}
 	

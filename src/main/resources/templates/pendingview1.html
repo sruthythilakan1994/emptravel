@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<htmlxmlns:th="http://www.thymeleaf.org>
+<head>
+ <title th:text="#{view.index.title}">Welcome!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
+    
+
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+
+
+<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				
+					<form autocomplete="off" action="#" th:action="@{/pendingaction}"
+					th:object="${app}" method="post" class="form-horizontal"
+					role="form">
+					
+					<h2>Approve/Reject Application</h2>
+					<br/><br/>
+					 <div class="panel-group" >
+			  <div class="panel panel-primary">
+				<div class="panel-heading">
+					<span th:utext="${userName}"></span>
+				</div>
+				<div class="panel-body">
+					
+				<div class="panel-body">
+				Skills Experience
+				<table class="table table-hover">
+
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Experience</th>
+						<th></th>
+
+					</tr>
+
+					<tr th:each="sk : ${allSkills}">
+						<td th:text="${sk.id}">Id</td>
+						<td th:text="${sk.skill.name}">Name</td>
+						<td th:text="${sk.skillExperience}">Experience</td>
+
+
+					</tr>
+
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+					
+</body>
+</html>

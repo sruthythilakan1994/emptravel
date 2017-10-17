@@ -1,4 +1,6 @@
 package com.assigment.emptravel.service;
+import java.util.Set;
+
 import java.util.List;
 
 import com.assigment.emptravel.model.JobApplication;
@@ -9,6 +11,7 @@ import com.assigment.emptravel.model.User;
 
 public interface JobService {
 	public void saveJob(Job job);
+	public void saveJob(Job job, User user);
 	public List<Job> findAll();
 	public Job findById(int id);
 	public boolean applyJob(User user, Job job);
@@ -22,5 +25,8 @@ public interface JobService {
 	
 	public JobApplication getApplication (int id);
 	
+	
+	
+	public Set<JobApplication> getSortedApplication(Job job);
 	
 }

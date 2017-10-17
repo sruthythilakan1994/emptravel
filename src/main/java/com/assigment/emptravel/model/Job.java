@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
@@ -19,6 +21,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Job {
+
+	public Set<ExpenseTracker> getExpenseTracker() {
+		return expenseTracker;
+	}
+
+	public void setExpenseTracker(Set<ExpenseTracker> expenseTracker) {
+		this.expenseTracker = expenseTracker;
+	}
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +42,10 @@ public class Job {
 	@NotEmpty(message = "*Please provide a title")
 	String description;
 	
+	@NotEmpty(message = "*Please provide a location")
+	String location;
+	
+	
 	int minExp;
 	
 	int maxExp;
@@ -42,15 +56,25 @@ public class Job {
 	@OneToMany(mappedBy="job")
 	Set<JobSkill> skill;
 	
+	@OneToMany(mappedBy="job")
+	Set<Tracker> trackers;
+	
+	
 	@NotEmpty(message = "*Please provide a title")
 	String designation;
 	
 	int duration;
 	
-	//@ManyToMany(mappedBy = "jobs")
-	//Set<User> users;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id", nullable=false)
+	User user;
 	
 	String status;
+	
+	@OneToMany (mappedBy="job")
+	Set<ExpenseTracker> expenseTracker;
+	
 	
 	
 	
@@ -149,6 +173,15 @@ public class Job {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+	
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
 
 	public Set<JobSkill> getSkill() {
 		return skill;
@@ -158,5 +191,23 @@ public class Job {
 		this.skill = skill;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Tracker> getTrackers() {
+		return trackers;
+	}
+
+	public void setTrackers(Set<Tracker> trackers) {
+		this.trackers = trackers;
+	}
+
+	
+	
 	
 }

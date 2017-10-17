@@ -25,6 +25,7 @@ import com.assigment.emptravel.repository.SkillRepository;
 import com.assigment.emptravel.repository.SkillSetRepository;
 import com.assigment.emptravel.service.SkillService;
 import com.assigment.emptravel.service.UserService;
+import com.assigment.emptravel.util.Util;
 
 @Controller
 public class SkillController {
@@ -37,6 +38,10 @@ public class SkillController {
 	@Autowired
 	SkillSetRepository skillSetRepository;
 
+	@Autowired
+	Util util;
+	
+	
 	@RequestMapping(value = { "/skill" }, method = RequestMethod.GET)
 	public ModelAndView skill() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -44,6 +49,7 @@ public class SkillController {
 		Skill skill = new Skill();
 		modelAndView.addObject("skill", skill);
 		modelAndView.addObject("skills", skillService.findAll());
+		modelAndView.addObject("role", util.getRole());
 
 		return modelAndView;
 	}
@@ -59,10 +65,11 @@ public class SkillController {
 			modelAndView.setViewName("skill");
 			modelAndView.addObject("skills", skillService.findAll());
 		}
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/skillset" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/updateskillset" }, method = RequestMethod.GET)
 	public ModelAndView skillSet() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("skillset");
@@ -73,7 +80,7 @@ public class SkillController {
 		User user = userService.findUserByEmail(auth.getName());
 
 		modelAndView.addObject("allSkills", user.getSkills());
-
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 
@@ -97,6 +104,7 @@ public class SkillController {
 		modelAndView.addObject("skills", skillService.findAll());
 		modelAndView.addObject("allSkills", user.getSkills());
 		// Set<SkillSet> skills = user.getSkills();
+		modelAndView.addObject("role", util.getRole());
 
 		return modelAndView;
 	}

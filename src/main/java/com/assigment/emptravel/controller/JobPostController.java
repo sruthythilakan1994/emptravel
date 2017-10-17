@@ -24,6 +24,7 @@ import com.assigment.emptravel.service.JobService;
 import com.assigment.emptravel.service.JobSkillService;
 import com.assigment.emptravel.service.SkillService;
 import com.assigment.emptravel.service.UserService;
+import com.assigment.emptravel.util.Util;
 
 @Controller
 public class JobPostController {
@@ -39,9 +40,13 @@ public class JobPostController {
 	@Autowired
 	JobSkillService jobSkillService;
 	
+	@Autowired
+	Util util;
+	
 	@RequestMapping(value="/jobpost")
 	public ModelAndView job(){
 		ModelAndView mv= new ModelAndView("jobpost");
+		mv.addObject("role", util.getRole());
 		Job job = new Job();
 		mv.addObject("job", job);
 		return mv;
@@ -53,7 +58,9 @@ public class JobPostController {
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("jobpost");
 		} else {
-			jobService.saveJob(job);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userService.findUserByEmail(auth.getName());
+			jobService.saveJob(job, user);
 			//modelAndView.addObject("successMessage", "Job has been created successfully.");
 			//modelAndView.setViewName("/jobpost");
 			
@@ -64,6 +71,7 @@ public class JobPostController {
 			    modelAndView.addObject("skills", skillService.findAll());
 			
 		}
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 	
@@ -85,6 +93,7 @@ public class JobPostController {
 			modelAndView.addObject("skills", skillService.findAll());
 			modelAndView.addObject("JobSkills", job.getSkill());
 		}
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 	
@@ -95,6 +104,7 @@ public class JobPostController {
 		Job job = jobService.findById(id);
 		modelAndView.addObject("job", job);
 		modelAndView.setViewName("/jobapply");
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 		
 	}
@@ -105,6 +115,7 @@ public class JobPostController {
 		Job job = jobService.findById(id);
 		modelAndView.addObject("job", job);
 		modelAndView.setViewName("/editJobpost");
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 	
@@ -121,10 +132,20 @@ public class JobPostController {
 			modelAndView.addObject("successMessage", "Job has been updated successfully.");
 			modelAndView.setViewName("/jobpost");
 		}
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 			
-	
+	@RequestMapping(value = { "/jobs/{id}" }, method = RequestMethod.GET)
+	public ModelAndView list(@PathVariable int id) {
+		ModelAndView modelAndView = new ModelAndView();
+		Job job = jobService.findById(id);
+		
+		 modelAndView.addObject("applications", jobService.getSortedApplication(job));
+		 modelAndView.setViewName("list");
+		 modelAndView.addObject("role", util.getRole());
+		return modelAndView;
+	}
 	
 	
 }
