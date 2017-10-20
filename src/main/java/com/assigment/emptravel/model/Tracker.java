@@ -1,5 +1,6 @@
 package com.assigment.emptravel.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "tracker")
+@Table(name = "tracker1")
 public class Tracker {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +28,7 @@ public class Tracker {
 	private int id;
 	
 	@OneToMany(mappedBy="tracker")
-	Set<TrackerItem> actionItems;
+	List<TrackerItem> actionItems;
 	
 	
 	@OneToOne
@@ -52,11 +53,12 @@ public class Tracker {
 		this.id = id;
 	}
 
-	public Set<TrackerItem> getActionItems() {
+
+	public List<TrackerItem> getActionItems() {
 		return actionItems;
 	}
 
-	public void setActionItems(Set<TrackerItem> actionItems) {
+	public void setActionItems(List<TrackerItem> actionItems) {
 		this.actionItems = actionItems;
 	}
 

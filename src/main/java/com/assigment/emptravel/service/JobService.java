@@ -27,6 +27,6 @@ public interface JobService {
 	
 	
 	
-	public Set<JobApplication> getSortedApplication(Job job);
+	public List<JobApplication> getSortedApplication(Job job);
 	
 }

@@ -52,6 +52,14 @@ public class LoginController {
 	}
 	
 	
+	/*@RequestMapping(value={ "/","/login"}, method = RequestMethod.GET)
+	public ModelAndView login(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("login");
+		return modelAndView;
+	}*/
+	
+	
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration1(){
 		ModelAndView modelAndView = new ModelAndView();
@@ -124,6 +132,7 @@ public class LoginController {
 			logger.warn("Triing to create user name same name ");
 		}
 		if (bindingResult.hasErrors()) {
+			modelAndView.addObject("successMessage", bindingResult.toString());
 			modelAndView.setViewName("registration1");
 		} else {
 			

@@ -32,6 +32,7 @@
        						 <td th:text="${application.id}">Id</td>  
         					 <td th:text="${application.job.title}">Title</td>
         					 <td th:text="${application.job.description}">Description</td>
+        					  <td th:text="${application.user.email}">Description</td>
         					 <td><a href="#" th:href="@{'/pendingview/' + ${application.id}}">Show Details</a>  </td>
         			 </tr>
         			 

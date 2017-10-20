@@ -21,10 +21,17 @@ public class Util {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User user = userService.findUserByEmail(auth.getName());
 		     String role= null;
-	        for ( Role r:user.getRoles()) {
-	            r.getRole();
-	            if (r.getRole()!=null) return r.getRole();
-	        }
+		     if(user!=null && user.getRoles()!= null) {
+		    	  for ( Role r:user.getRoles()) {
+			            r.getRole();
+			            if (r.getRole()!=null) return r.getRole();
+			        }
+		     }
+	      
+	        
+	        //TODO- remove this
+	        if (role==null) role="ADMIN";
+	        
 	        return role;
 	    }
 	

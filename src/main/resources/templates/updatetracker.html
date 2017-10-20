@@ -21,7 +21,7 @@
 <div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{'/tasktracker/add/' + ${item.tracker.id}}"
+				<form autocomplete="off" action="#" th:action="@{'/updatetracker/'+ ${item.id}}"
 					th:object="${item}" method="post" class="form-horizontal"
 					role="form">
 					
@@ -81,7 +81,7 @@
 					</div>
 					<!-- <div class="form-group">
                         <div class="col-sm-9">
-
+ 
                             <label th:if="${#fields.hasErrors('startDate')}"
                                 th:errors="*{startDate}" class="validation-message"></label> 
                              DATE<input type="text" th:field="*{startDate}"
@@ -116,7 +116,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Add</button>
+							<button type="submit" class="btn btn-primary btn-block">Update</button>
 						</div>
 					</div>
 					
@@ -138,7 +138,7 @@
 				</div>
 				<div class="panel-body">
 					
-					Item
+					Updated Item
 					 <table class="table table-hover">
 					 
 					 <tr>
@@ -158,8 +158,8 @@
         					  <td th:text="${item.description}">Description</td>  
         					  <td th:text="${item.status}">Status</td>
         					  <td th:text="${item.startDate}">Date</td>
-        					  	 <td><a href="#" th:href="@{'/updatetracker/' + ${item.id}}">Edit</a>  </td>
-        					  
+        					  	 <!-- <td><a href="#" th:href="@{'/updatetracker/' + ${item.id}}">Edit</a>  </td>
+        					   -->
         					 
         					 
         					 

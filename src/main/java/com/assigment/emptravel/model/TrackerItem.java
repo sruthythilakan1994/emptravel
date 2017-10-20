@@ -1,5 +1,6 @@
 package com.assigment.emptravel.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,17 +11,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @Entity
+@Table(name = "trackerItem1")
 public class TrackerItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "track_item_id")
-	private long id;
+	private int id;
+	
+	@Column(name="start_date")
+    private Date startDate;
+
 	
 	@Column(name = "title")
 	@NotEmpty(message = "*Please provide  a title")
@@ -36,6 +43,10 @@ public class TrackerItem {
 	@JoinColumn(name="track_id", nullable=false)
 	Tracker tracker;
 	
+	@ManyToOne
+	@JoinColumn(name="user_id", nullable=false)
+	User user;
+	
 	@OneToMany(mappedBy="item")
 	Set<Attachment> attachments;
 
@@ -43,8 +54,12 @@ public class TrackerItem {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 	public String getTitle() {
@@ -88,5 +103,18 @@ public class TrackerItem {
 	public void setAttachments(Set<Attachment> attachments) {
 		this.attachments = attachments;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+	
 	
 }

@@ -28,8 +28,8 @@
 
 					<div class="form-group">
 						<div class="col-sm-9">
-							JobId<input type="text" th:field="*{job.id}"
-								placeholder="Job ID" class="form-control" />
+							JobId<input type="text" th:field="*{job.id}" placeholder="Job ID"
+								class="form-control" />
 						</div>
 					</div>
 
@@ -49,8 +49,7 @@
 					<div class="form-group">
 						<div class="col-sm-9">
 
-							<label class="validation-message">Skills</label> 
-							<select
+							<label class="validation-message">Skills</label> <select
 								class="form-control" aria-describedby="status-addon"
 								id="technicalSkills" name="technicalSkills"
 								th:field="*{technicalSkills}">
@@ -84,29 +83,38 @@
 				</form>
 			</div>
 		</div>
-		<div class="panel-body">
-					
-					         Skills
-					 <table class="table table-hover">
-					 
-					     <tr>
-        				    <th>Id</th>
-        				    <th>Name</th>
-        				    <th>Experience</th>
-        				    <th></th>
+		<div class="panel-group">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<span th:utext="${userName}"></span>
+				</div>
+				<div class="panel-body">
 
-      			         </tr>
-      			      
-					 <tr th:each="sk : ${JobSkills}">
-       						 <td th:text="${sk.id}">Id</td>  
-        					 <td th:text="${sk.skill.name}">Name</td> 
-        					 <td th:text="${sk.skillExperience}">Experience</td>
-        					
-        			
-        			 </tr>
-        			  
-        			
-    				 </table>
-				  </div>
-	</div>
+					<div class="panel-body">
+
+						                    <h2>Job Skill Set</h2>
+						<table class="table table-hover">
+
+							<tr>
+								<th> Id</th>
+								<th>Skill Name</th>
+								<th>Skill Experience</th>
+								<th></th>
+
+							</tr>
+
+							<tr th:each="sk : ${JobSkills}">
+								<td th:text="${sk.id}">Job Id</td>
+								<td th:text="${sk.skill.name}">Skill Name</td>
+								<td th:text="${sk.skillExperience}">Skill Experience</td>
+
+
+							</tr>
+
+
+						</table>
+						</div>
+						</div>
+					</div>
+				</div>
 </html>

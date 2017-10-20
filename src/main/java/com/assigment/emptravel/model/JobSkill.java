@@ -39,8 +39,8 @@ public class JobSkill {
 	private String technicalSkills;
 	
 	@Column(name = "skill_experience")
-	@NotEmpty(message = "*Please provide your skill experience")
-	private String skillExperience;
+	//@NotEmpty(message = "*Please provide your skill experience")
+	private int skillExperience;
 	
 	
 	
@@ -62,11 +62,11 @@ public class JobSkill {
 		this.technicalSkills = technicalSkills;
 	}
 
-	public String getSkillExperience() {
+	public int getSkillExperience() {
 		return skillExperience;
 	}
 
-	public void setSkillExperience(String skillExperience) {
+	public void setSkillExperience(int skillExperience) {
 		this.skillExperience = skillExperience;
 	}
 

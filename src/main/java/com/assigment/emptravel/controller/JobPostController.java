@@ -109,6 +109,23 @@ public class JobPostController {
 		
 	}
 	
+	
+	@RequestMapping(value="/jobinfo/{id}", method = RequestMethod.GET)
+	public ModelAndView viewJobInfo(@PathVariable int id , @Valid JobSkill jobSkill, BindingResult bindingResult ){
+		
+		ModelAndView modelAndView = new ModelAndView();
+		Job job = jobService.findById(id);
+		/*Job skill = jobService.findById(jobSkill.getSkill());
+		modelAndView.addObject("jobSkill", skill);*/
+		//Skill skill = skillService.findSkillById(Integer.parseInt(jobSkill.getTechnicalSkills()));
+		modelAndView.addObject("job", job);
+		modelAndView.setViewName("/jobinfoo");
+		//modelAndView.addObject("role", util.getRole());
+		return modelAndView;
+		
+	}
+	
+	
 	@RequestMapping(value="/jobpost/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView updateJob( @PathVariable int id){
 		ModelAndView modelAndView = new ModelAndView();
@@ -146,6 +163,8 @@ public class JobPostController {
 		 modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
+	
+	
 	
 	
 }

@@ -14,80 +14,142 @@
 
 
 
-<div class="container">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				
-					<form autocomplete="off" action="#" th:action="@{/pendingaction}"
+
+				<form autocomplete="off" action="#" th:action="@{/pendingaction}"
 					th:object="${app}" method="post" class="form-horizontal"
 					role="form">
-					
+
 					<h2>Approve/Reject Application</h2>
-					<br/><br/>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-						<label	class="validation-message">Application Id : </label>
-						<label th:text = "${app.id}"	class="validation-message"></label>
-						<input type="hidden" th:field="*{id}" 
-								class="form-control" /> 
+					<br />
+					<br />
+
+
+					<div class="panel-group">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<span th:utext="${userName}"></span>
+							</div>
+							<div class="panel-body">
+
+								<div class="panel-body">
+									<h5>Job Details</h5>
+									<table class="table table-hover">
+
+										<tr>
+											<th> Id</th>
+											<th>Job Title</th>
+											<th>Job description</th>
+											<!-- <th>User skill</th> -->
+
+											<th></th>
+
+										</tr>
+
+										<tr th:each="app : ${app}">
+											<td th:text="${app.id}">Id</td>
+											<td th:text="${app.job.title}">Title</td>
+											<td th:text="${app.job.description}">Description</td>
+											<!-- <td th:text="${app.user.sk}">Experience</td> -->
+
+
+										</tr>
+
+
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
+
+
+
 					
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-						<label	class="validation-message">Job Title : </label>
-						<label th:text = "${app.job.title}"	class="validation-message"></label>
+
+
+					<div class="panel-group">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<span th:utext="${userName}"></span>
+							</div>
+							<div class="panel-body">
+
+								<div class="panel-body">
+									<h5>User Details</h5>
+									<table class="table table-hover">
+
+										<tr>
+											<th>User Id</th>
+											<th>User Name</th>
+											<th>User Email</th>
+											<!-- <th>User skill</th> -->
+
+											<th></th>
+
+										</tr>
+
+										<tr th:each="app : ${app}">
+											<td th:text="${app.user.id}">Id</td>
+											<td th:text="${app.user.name}">Name</td>
+											<td th:text="${app.user.Email}">Experience</td>
+											<!-- <td th:text="${app.user.sk}">Experience</td> -->
+
+
+										</tr>
+
+
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
-					
+
+
+
+
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	class="validation-message">Job Description : </label>
-						<label th:text = "${app.job.description}"	class="validation-message"></label>
+							<label class="validation-message">Status</label> <select
+								class="form-control" aria-describedby="status-addon" id="status"
+								name="status" th:field="*{status}">
+								<option th:value="APPROVED" th:text="Approve"></option>
+								<option th:value="REJECTED" th:text="Reject"></option>
+							</select>
 						</div>
 					</div>
-					
-									
-					<div class="form-group">
-					   <div class="col-sm-9">
-					   <label	class="validation-message">Status</label>
-					   <select class="form-control" aria-describedby="status-addon" id="status" name="status" th:field="*{status}">                 
-                		 	<option   th:value="APPROVED" th:text="Approve"></option>
-                		 	<option   th:value="REJECTED" th:text="Reject"></option>
-                	   </select>
-						</div>
-					</div>
-					
-					
+
+
 					<div class="form-group">
 						<div class="col-sm-9">
-							<label	class="validation-message">Message</label> : 
-							<input type="text" th:field="*{message}" placeholder="Message"
+							<label class="validation-message">Message</label> : <input
+								type="text" th:field="*{message}" placeholder="Message"
 								class="form-control" /> <label
 								th:if="${#fields.hasErrors('message')}" th:errors="*{message}"
 								class="validation-message"></label>
 						</div>
 					</div>
-					
-										
+
+
 					<div class="form-group">
 						<div class="col-sm-9">
 							<button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
 						</div>
 					</div>
-					
-					<span th:utext="${successMessage}"></span>
-					<br/><br/><br/><br/>
-					
+
+					<span th:utext="${successMessage}"></span> <br />
+					<br />
+					<br />
+					<br />
+
 				</form>
 			</div>
 		</div>
 	</div>
 
-<hr>
-<div th:replace="fragments/footer :: footer">&nbsp;</div>
+	<hr>
+	<div th:replace="fragments/footer :: footer">&nbsp;</div>
 
 </body>
 </html>

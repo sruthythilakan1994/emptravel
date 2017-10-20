@@ -120,6 +120,9 @@ public class User {
 	Set<ExpenseTracker> expenseTracker;
 	
 	
+	@OneToMany(mappedBy="user")
+	Set<TrackerItem> trackerItems;
+	
 	
 	
 	public Set<ExpenseTracker> getExpenseTracker() {
@@ -294,6 +297,14 @@ public class User {
 
 	public void setJobs(Set<Job> jobs) {
 		this.jobs = jobs;
+	}
+
+	public Set<TrackerItem> getTrackerItems() {
+		return trackerItems;
+	}
+
+	public void setTrackerItems(Set<TrackerItem> trackerItems) {
+		this.trackerItems = trackerItems;
 	}
 	
 	

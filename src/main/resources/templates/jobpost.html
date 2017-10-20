@@ -27,7 +27,7 @@
 					<div class="form-group">
 						<div class="col-sm-9">
 						<label	class="validation-message">Job Title</label>
-						<label th:text = "${job.Id}"	class="validation-message"></label>
+						<!-- <label th:text = "${job.Id}"	class="validation-message"></label> -->
 						<label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
 								class="validation-message"></label>
 						<input type="text" th:field="*{title}" placeholder="Job Title"
@@ -109,7 +109,7 @@
 						</div>
 					</div>
 										
-					<a href="#" th:href="@{'/jobskill/' }">Add Skills</a>	
+					<!-- <a href="#" th:href="@{'/jobskill/' }">Add Skills</a>	 -->
 
 					<div class="form-group">
 						<div class="col-sm-9">
