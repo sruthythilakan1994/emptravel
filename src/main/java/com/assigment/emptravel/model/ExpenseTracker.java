@@ -1,5 +1,6 @@
 package com.assigment.emptravel.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "expensetracker")
@@ -43,18 +45,38 @@ public class ExpenseTracker {
 	private Set<User> users;
 	
 	
+
+	@OneToOne
+	@JoinColumn(name = "employee_id")
+	private User employee;
+
+	@JoinColumn(name = "manager_id")
+	@OneToOne
+	private User manager;
+	
+	 @DateTimeFormat(pattern = "dd/MM/yyyy")
+	    @Column(name="start_date")
+	    private Date startDate;
+	   
+	      @DateTimeFormat(pattern = "dd/MM/yyyy")
+	    @Column(name="end_date")
+	    private Date endDate;
+
+	
+	
+
 	@Column(name = "daily_allowance")
-	@NotEmpty(message = "*Please provide your daily allowancee ")
+	//@NotEmpty(message = "*Please provide your daily allowancee ")
 	private int dailyAllowance;
 	
 
 	@Column(name = "food_expense")
-	@NotEmpty(message = "*Please provide your food expense")
+	//@NotEmpty(message = "*Please provide your food expense")
 	private int foodExpense;
 	
 	
 	@Column(name = "cab_expense")
-	@NotEmpty(message = "*Please provide yourcab expense")
+	//@NotEmpty(message = "*Please provide yourcab expense")
 	private int cabExpense;
 	
 	@Column(name = "country")
@@ -132,10 +154,40 @@ public class ExpenseTracker {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
+	public User getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(User employee) {
+		this.employee = employee;
+	}
+
+	public User getManager() {
+		return manager;
+	}
+
+	public void setManager(User manager) {
+		this.manager = manager;
+	}
 	
 	
 	
-	
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
 	
 	

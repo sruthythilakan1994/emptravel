@@ -169,6 +169,8 @@ public class LoginController {
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.addObject("jobs", jobService.findAll());
 		modelAndView.addObject("role", util.getRole());
+		modelAndView.addObject("todoTrackers", user.getTrackers());
+		modelAndView.addObject("expenseTrackers", user.getExpenseTracker());
 		Set<JobApplication> applications= user.getApplications();
 		List<JobInfo> appliedJobList = new ArrayList<JobInfo>();
 		for ( JobApplication application : applications ){
@@ -212,6 +214,8 @@ public class LoginController {
 		modelAndView.addObject("postedJobs", user.getJobs());
 		modelAndView.addObject("jobs", jobService.findAll());
 		modelAndView.addObject("role", util.getRole());
+		modelAndView.addObject("todoTrackers", user.getTrackers());
+		modelAndView.addObject("expenseTrackers", user.getExpenseTracker());
 		Set<JobApplication> applications= user.getApplications();
 		List<JobInfo> appliedJobList = new ArrayList<JobInfo>();
 		for ( JobApplication application : applications ){

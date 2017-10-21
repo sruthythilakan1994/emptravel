@@ -71,11 +71,65 @@
 				</div>
 				
 				
+				
+				
+				
+				
+			
+				
+				
+				
+				
 					
 				</div>
 				
 			</div>
 		</div>
+		
+		
+		
+		
+		
+		<div class="panel-group" style="margin-top: 40px">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<span>Expense Trackers </span>
+				</div>
+				<div class="panel-body">
+
+
+					<div class="panel-body">
+											<table class="table table-hover">
+
+							<tr>
+								<th>#</th>
+								<th>Job Title</th>
+								<th>Employee</th>
+								<th>Approver</th>
+								<th></th>
+								<th></th>
+							</tr>
+
+							<tr th:each="tracker : ${expenseTrackers}">
+								<td th:text="${tracker.id}">Id</td>
+								<td th:text="${tracker.job.title}">Title</td>
+								<td th:text="${tracker.employee.email}">Description</td>
+								<td th:text="${tracker.manager.email}">Description</td>
+								<td><a href="#"
+									th:href="@{'/expensetracker/view/' + ${tracker.id}}">Show Details</a>
+								</td>
+								<td><a href="#"
+									th:href="@{'/expensetracker/claim/' + ${tracker.id}}">Expense Claim</a>
+								</td>
+							</tr>
+
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		
    
 </div>
