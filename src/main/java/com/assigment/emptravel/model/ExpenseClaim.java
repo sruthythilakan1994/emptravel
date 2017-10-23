@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = " expenseclaim")
@@ -26,15 +29,25 @@ public class ExpenseClaim {
 	@JoinColumn(name="expense_tracker_id", nullable=false)
 	ExpenseTracker  expenseTracker;
 	
-	Date fromDate;
 	
-	Date toDate;
+	 @DateTimeFormat(pattern = "dd/MM/yyyy")
+	 @NotNull (message = "*Please provide the date")
+	 Date fromDate;
 	
-	double dailyAllawance;
+		
+	 @DateTimeFormat(pattern = "dd/MM/yyyy")
+	 @NotNull (message = "*Please provide the date ")
+	 Date toDate;
 	
-	double foodAllawance;
+	 @NotNull (message = "*Please provide your daily allowancee ")
+	 double dailyAllawance;
 	
-	double cabAllawance;
+	 @NotNull (message = "*Please provide your food allowancee ")
+	 double foodAllawance;
+	
+	 @NotNull (message = "*Please provide your cab allowancee ")
+	 double cabAllawance;
+	
 	
 	String status;
 	
@@ -69,7 +82,7 @@ public class ExpenseClaim {
 	public Date getFromDate() {
 		return fromDate;
 	}
-
+                        
 	public void setFromDate(Date fromDate) {
 		this.fromDate = fromDate;
 	}

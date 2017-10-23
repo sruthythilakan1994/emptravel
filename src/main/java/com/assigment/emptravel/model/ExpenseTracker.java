@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -55,32 +58,37 @@ public class ExpenseTracker {
 	private User manager;
 	
 	 @DateTimeFormat(pattern = "dd/MM/yyyy")
-	    @Column(name="start_date")
-	    private Date startDate;
+	 @NotNull (message = "*Please provide your daily allowancee ")
+	 @Column(name="start_date")
+	 private Date startDate;
 	   
-	      @DateTimeFormat(pattern = "dd/MM/yyyy")
-	    @Column(name="end_date")
-	    private Date endDate;
 
-	
-	
-
+	 @DateTimeFormat(pattern = "dd/MM/yyyy")
+	 @NotNull (message = "*Please provide your daily allowancee ")
+	 @Column(name="end_date")
+	 private Date endDate;
+	 
+	@Min(value=0)
+	@Max(value=10000)
 	@Column(name = "daily_allowance")
-	//@NotEmpty(message = "*Please provide your daily allowancee ")
+	@NotNull(message = "*Please provide your daily allowancee ")
 	private int dailyAllowance;
 	
 
+	@Min(value=0)
+	@Max(value=10000)
 	@Column(name = "food_expense")
-	//@NotEmpty(message = "*Please provide your food expense")
+	@NotNull(message = "*Please provide your food expense")
 	private int foodExpense;
 	
 	
+	
 	@Column(name = "cab_expense")
-	//@NotEmpty(message = "*Please provide yourcab expense")
+	@NotNull(message = "*Please provide yourcab expense")
 	private int cabExpense;
 	
 	@Column(name = "country")
-	@NotEmpty(message = "*Please provide your country ")
+	@NotNull(message = "*Please provide your country ")
 	private String country;
 
 	public int getId() {
@@ -171,8 +179,6 @@ public class ExpenseTracker {
 		this.manager = manager;
 	}
 	
-	
-	
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -188,11 +194,5 @@ public class ExpenseTracker {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
-	
-	
-	
-	
-	
 	
 }

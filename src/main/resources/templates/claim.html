@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{view.index.title}">Welcome!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
+    
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+
+
+<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/expense/claim/{id}}"
+					th:object="${expenseTracker}" method="post" class="form-horizontal"
+					role="form">
+					
+					
+					<h2>Expense Claim</h2>
+					<br />
+					<br />
+					
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<label class="validation-message">Tracker Id :</label> 
+							<input type="hidden"
+								th:field="*{id}" placeholder="Id" class="form-control" />
+							<label class="validation-message" th:text="*{id}">Job</label> 
+						</div>
+					</div> 
+					
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<label class="validation-message">Job</label> :
+							<label class="validation-message" th:text="*{job.title}">Job</label> 
+						</div>
+					</div> 
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<label class="validation-message">Claim By</label> :
+							<label class="validation-message" th:text="*{employee.email}">Job</label> 
+						</div>
+					</div> 
+					
+					
+
+					<div class="form-group">
+						<div class="col-sm-9">
+							<label class="validation-message">Daily Allowance:</label>
+								<label class="validation-message" th:text="*{dailyAllowance}">Job</label> 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<label class="validation-message">Food Expense :</label>
+								<label class="validation-message" th:text="*{foodExpense}">Job</label> 
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+							<label class="validation-message">Cab Expense :</label> 
+							<label class="validation-message" th:text="*{cabExpense}">Job</label> 						
+						</div>
+					</div>
+					
+			
+					
+				</form>
+			</div>
+		</div>
+	
+
+
+
+
+
+<div class="panel-group" style="margin-top: 40px">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span>Expense Tracker</span>
+			</div>
+			<div class="panel-body">
+				<div class="panel-body">
+					<table class="table table-hover">
+						<tr>
+							<th>#</th>
+							<th>From Date (DD/MM/YYYY)</th>
+							<th>To Date (DD/MM/YYYY)</th>
+							<th> Per Diem</th>
+							<th>Food</th>
+							<th> Cab</th>
+							<th> status</th>
+						</tr>
+
+
+						<tr th:each="claim : ${expenseTracker.expenseClaim}">
+ 							<td th:text="${claim.id}">Id</td>
+                            <td th:text="${#dates.format(claim.fromDate, 'dd-MMM-yyyy')}" >Id</td>
+                            <td th:text="${#dates.format(claim.toDate, 'dd-MMM-yyyy')}" >Id</td>
+                            <td th:text="${claim.dailyAllawance}">Id</td>
+							<td th:text="${claim.foodAllawance}">Id</td>
+							<td th:text="${claim.cabAllawance}">Title</td>
+							<td th:text="${claim.status}">Title</td>
+							<td><a href="#" th:href="@{'/claim/approval/' + ${claim.id}}">Approve/Reject</a> </td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+
+<hr>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+</body>
+</html>
+
