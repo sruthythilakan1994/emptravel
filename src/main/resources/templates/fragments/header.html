@@ -26,14 +26,14 @@
                  </li>
                  
                  <li >
-                  <a href="#" th:if="${role eq 'ADMIN'}" th:href="@{/user/home}">Home</a>
+                  <a href="#" th:if="${role eq 'USER'}" th:href="@{/user/home}">Home</a>
                   </li>
                  <li >
                     <a href="#" th:if="${role eq 'ADMIN'}" th:href="@{/registration}">Register</a>
                 </li>
                 
                 <li >
-                    <a href="#" th:href="@{/updateprofile}">  Profile </a>
+                    <a href="#"      th:if="${role eq 'MANAGER' || role eq 'USER' || role eq 'ADMIN'}"th:href="@{/updateprofile}">  Profile </a>
                 </li>
                 
                 <li >
@@ -55,11 +55,11 @@
                     <a href="#" th:if="${role eq 'MANAGER'}" th:href="@{/jobapplications}">Applications</a>
                 </li>
                    <li>
-                    <a href="#" th:href="@{/tasktracker}">Todo Tracker</a>
+                    <a href="#"  th:if="${role eq 'MANAGER' || role eq 'USER'}" th:href="@{/tasktracker}">Todo Tracker</a>
                 </li>
                  
                      <li>
-                    <a href="#" th:href="@{/expense}">Create Tracker</a>
+                    <a href="#"  th:if="${role eq 'MANAGER'}" th:href="@{/expense}">Create Tracker</a>
                      </li>     
             </ul>
             <ul class="nav navbar-nav navbar-right">

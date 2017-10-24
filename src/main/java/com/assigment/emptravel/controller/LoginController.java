@@ -151,7 +151,7 @@ public class LoginController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value= {"/home","/user/home","/admin/home"}, method = RequestMethod.GET)
+	@RequestMapping(value= {"/home","/user/home"}, method = RequestMethod.GET)
 	public ModelAndView home(){
 		
 		logger.info("#############################");
@@ -238,6 +238,32 @@ public class LoginController {
 		return modelAndView;
 	}
 	
+	
+	
+	@RequestMapping(value= {"/admin/home"}, method = RequestMethod.GET)
+	public ModelAndView adminHome(){
+		
+		logger.info("#############################");
+		logger.info("START - Home page ");
+		
+		//List<Project> aaa= new ArrayList();
+		ModelAndView modelAndView = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+	
+		logger.debug("Username ="+  user.getName() );
+		logger.debug("Username ="+  user.getEmail()  );
+		
+		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+		
+		modelAndView.addObject("role", util.getRole());
+		
+		modelAndView.setViewName("/adminSignedIn");
+		
+	
+		return modelAndView;
+	}
 	
 	@RequestMapping(value = "/appliedjob")
 	   public ModelAndView appliedJob() {

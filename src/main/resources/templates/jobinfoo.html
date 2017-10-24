@@ -1,88 +1,91 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{view.index.title}">Welcome!</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
-    
+<title th:text="#{view.index.title}">Welcome!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
+
 </head>
 <body>
-<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
 
 
 
 
 
 
-<div class="container">
+	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-					<br />
-					<br />
+				<br /> <br />
 
-	</div>
+			</div>
 		</div>
-		  <div class="panel-body">
-					
-				
-			 <div class="panel-group" style="margin-top:40px">
-			  <div class="panel panel-primary">
-				<div class="panel-heading">
-					<span th:utext="${userName}"></span>
-				</div>
-				<div class="panel-body">
-					
-					Skills
-					 <table class="table table-hover">
-										<tr>
-											<th> Id</th>
-											<th> Title</th>
-											<th> description</th>
-											<th> minExp</th>
-											<th> maxExp</th>
-											<th> Designation</th>
-											<th>Duration</th>
-											<th>Location</th>
-											<th>Location</th>
-											
-											
-											<th></th>
+		<div class="panel-body">
+
+
+			<div class="panel-group" style="margin-top: 40px">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<span th:utext="${userName}"></span>
+					</div>
+					<div class="panel-body">
+
+						Job Details
+						<table class="table table-hover">
+							<tr>
+								<th>Id</th>
+								<th>Title</th>
+								<th>Description</th>
+								<th>MinExp</th>
+								<th>MaxExp</th>
+								<th>Designation</th>
+								<th>Duration</th>
+								<th>Location</th>
+								<th>Skills</th>
+
+
+
+								<th></th>
+
+							</tr>
+
+							<tr th:each="job : ${job}">
+								<td th:text="${job.id}">Id</td>
+								<td th:text="${job.title}">Title</td>
+								<td th:text="${job.description}">Description</td>
+								<td th:text="${job.minExp}">Experience</td>
+								<td th:text="${job.maxExp}">experience</td>
+								<td th:text="${job.designation}">Designation</td>
+								<td th:text="${job.duration}">Duration</td>
+								<td th:text="${job.location}">Location</td>
+
+								<td>
+
+									<table class="table table-hover">
+										<tr th:each="skills : ${job.skill}">
+											<td th:text="${skills.skill.name}">skill name</td>
+											<td th:text="${skills.skillExperience}">skill experience</td>
 
 										</tr>
+									</table>
 
-										<tr th:each="job : ${job}">
-											<td th:text="${job.id}">Id</td>
-											<td th:text="${job.title}">Title</td>
-											<td th:text="${job.description}">Description</td>
-											<td th:text="${job.minExp}">Experience</td>
-											<td th:text="${job.maxExp}">experience</td>
-											<td th:text="${job.designation}">Designation</td> 
-											<td th:text="${job.duration}">Duration</td>
-											<td th:text="${job.location}">Location</td> 
-											
-											<td>
-											
-											<table class="table table-hover">
-											<tr th:each="skills : ${job.skill}">
-											<td th:text="${skills.skill.name}"></td>
-											<td th:text="${skills.skillExperience}"></td>
-									
-											</tr>
-											</table>
-											
-											</td> 
-										</tr>
+								</td>
+							</tr>
 
- </table>
+						</table>
+					</div>
 				</div>
-			</div>	
+			</div>
+		</div>
 	</div>
-</div>
-</div>
-<hr>
-          <div th:replace="fragments/footer :: footer">&nbsp;</div>
+	<hr>
+	<div th:replace="fragments/footer :: footer">&nbsp;</div>
 </body>
 </html>

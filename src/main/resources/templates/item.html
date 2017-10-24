@@ -28,20 +28,22 @@
 					<h2>Travel Task Tracker </h2>
 					<br/><br/>
 					
-					<div class="form-group">
+					
+					 <div class="form-group">
 						<div class="col-sm-9">
-						
-					Tracker Id :
-						<input type="text" th:field="*{tracker.id}" placeholder="name"
+						 <label	class="validation-message">Tracker Id : </label>
+				         <label th:text = "${item.tracker.Id}"	class="validation-message"></label>
+						<input type="hidden" th:field="*{tracker.id}" placeholder="name"
 								class="form-control" /> 
-						</div>
+					</div>
 					</div>
 				
 				
 					<div class="form-group">
 						<div class="col-sm-9">
-					Job Id:
-						<input type="text" th:field="*{tracker.job.id}" placeholder="name"
+						<label	class="validation-message">	Job Id: </label>
+				        <label th:text = "${item.tracker.job.Id}"	class="validation-message"></label>
+						<input type="hidden" th:field="*{tracker.job.id}" placeholder="name"
 								class="form-control" /> 
 						</div>
 					</div>
@@ -49,8 +51,9 @@
 						
 					<div class="form-group">
 						<div class="col-sm-9">
-					Job Title:
-						<input type="text" th:field="*{tracker.job.title}" placeholder="name"
+						<label	class="validation-message">	Job Title: </label>
+				        <label th:text = "${item.tracker.job.title}"	class="validation-message"></label>
+						<input type="hidden" th:field="*{tracker.job.title}" placeholder="name"
 								class="form-control" /> 
 						</div>
 					</div>
@@ -58,16 +61,19 @@
 						
 					<div class="form-group">
 						<div class="col-sm-9">
-					Manager
-						<input type="text" th:field="*{tracker.job.user.name}" placeholder="name"
+						<label	class="validation-message">	Manager: </label>
+				        <label th:text = "${item.tracker.job.user.name}"	class="validation-message"></label>
+						<input type="hidden" th:field="*{tracker.job.user.name}" placeholder="name"
 								class="form-control" /> 
 						</div>
 					</div>
 						
 							<div class="form-group">
 						<div class="col-sm-9">
-					Applicant
-						<input type="text" th:field="*{tracker.jobApplication.user.name}" placeholder="name"
+						<label	class="validation-message">	Applicant: </label>
+				        <label th:text = "${item.tracker.jobApplication.user.name}"	class="validation-message"></label>
+					
+						<input type="hidden" th:field="*{tracker.jobApplication.user.name}" placeholder="name"
 								class="form-control" /> 
 						</div>
 					</div>

@@ -58,13 +58,13 @@ public class ExpenseTracker {
 	private User manager;
 	
 	 @DateTimeFormat(pattern = "dd/MM/yyyy")
-	 @NotNull (message = "*Please provide your daily allowancee ")
+	 @NotNull (message = "*Please provide your start date ")
 	 @Column(name="start_date")
 	 private Date startDate;
 	   
 
 	 @DateTimeFormat(pattern = "dd/MM/yyyy")
-	 @NotNull (message = "*Please provide your daily allowancee ")
+	 @NotNull (message = "*Please provide your end date")
 	 @Column(name="end_date")
 	 private Date endDate;
 	 

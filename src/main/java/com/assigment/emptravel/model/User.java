@@ -60,11 +60,11 @@ public class User {
 	
 
 	@Column(name = "designation")
-	//@NotEmpty(message = "*Please provide your designation")
+	@NotEmpty(message = "*Please provide your designation")
 	private String designation;
 
 	@Column(name = "qualification")
-	//@NotEmpty(message = "*Please provide your qualification")
+	@NotEmpty(message = "*Please provide your qualification")
 	private String qualification;
 	
 	@Column(name = "address")

@@ -22,6 +22,7 @@ import com.assigment.emptravel.model.User;
 import com.assigment.emptravel.service.TrackerItemService;
 import com.assigment.emptravel.service.TrackerService;
 import com.assigment.emptravel.service.UserService;
+import com.assigment.emptravel.util.Util;
 
 @Controller
 public class TaskTrackerController {
@@ -34,6 +35,8 @@ public class TaskTrackerController {
 	@Autowired
 	TrackerItemService trackerItemService;
 	
+	@Autowired
+	Util util;
 	@RequestMapping(value = "/tasktracker")
 	public ModelAndView viewtracker() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -45,7 +48,7 @@ public class TaskTrackerController {
 		Tracker task = new Tracker();
 		modelAndView.addObject("trackers",user.getTrackers() );
 		modelAndView.setViewName("tracker");
-		
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView ;
 
 }
@@ -75,6 +78,7 @@ public class TaskTrackerController {
 		modelAndView.addObject("actionItems",trackerService.findById(id).getActionItems() );
 		modelAndView.setViewName("item");
 		
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView ;
 
 }
@@ -95,7 +99,7 @@ public class TaskTrackerController {
 		modelAndView.addObject("item", item);
 		modelAndView.addObject("actionItems",trackerService.findById(id).getActionItems() );
 		modelAndView.setViewName("item");
-		
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView ;
 
 }
@@ -112,6 +116,8 @@ public class TaskTrackerController {
 		modelAndView.addObject("actionItems",item.getTracker().getActionItems() );
 		
 		modelAndView.setViewName("updatetracker");
+		
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 	}
 	
@@ -130,7 +136,7 @@ public class TaskTrackerController {
 		modelAndView.addObject("item", itemUpdate);
 		//modelAndView.addObject("role", util.getRole());
 		modelAndView.addObject("actionItems",itemUpdate.getTracker().getActionItems() );
-		
+		modelAndView.addObject("role", util.getRole());
 		modelAndView.setViewName("/updatetracker");
 		
 	

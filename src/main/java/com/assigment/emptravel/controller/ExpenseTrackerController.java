@@ -26,6 +26,7 @@ import com.assigment.emptravel.service.ExpenseClaimService;
 import com.assigment.emptravel.service.ExpenseTrackerService;
 import com.assigment.emptravel.service.JobService;
 import com.assigment.emptravel.service.UserService;
+import com.assigment.emptravel.util.Util;
 
 @Controller
 public class ExpenseTrackerController {
@@ -39,6 +40,10 @@ public class ExpenseTrackerController {
 	JobService jobService;
 	
 	@Autowired
+	Util util;
+	
+	
+	@Autowired
 	private ExpenseClaimService expenseClaimService;
 	
 	@RequestMapping(value = "/Expense")
@@ -50,7 +55,7 @@ public class ExpenseTrackerController {
 		//ExpenseTracker  expense = new  ExpenseTracker();
 		//modelAndView.addObject("trackers",user.getTrackers() );
 		modelAndView.setViewName("expense");
-		
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView ;
 
 	}
@@ -66,7 +71,7 @@ public class ExpenseTrackerController {
 						 modelAndView.addObject("expenseTracker", expenseTracker);
 						// modelAndView.addObject("successMessage", "expense tracker has been created successfully.");
 						 modelAndView.setViewName("/expenseTracker");
-					
+						 modelAndView.addObject("role", util.getRole());
 					return modelAndView;	
 	}
 	
@@ -89,7 +94,7 @@ public class ExpenseTrackerController {
 			          
 						 modelAndView.addObject("successMessage", "expense tracker has been created successfully.");
 						 modelAndView.setViewName("/expenseTracker");
-					
+						 modelAndView.addObject("role", util.getRole());
 					return modelAndView;
 		
 	}
@@ -107,6 +112,7 @@ public class ExpenseTrackerController {
 		
 		modelAndView.addObject("expenseClaim", expenseClaim);
 		modelAndView.setViewName("/expenseClaim");
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;	
 	}
 	
@@ -176,7 +182,7 @@ public class ExpenseTrackerController {
 			modelAndView.addObject("successMessage", "expense cliam posted successfully.");
 		}
 		
-	
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 
 	}
@@ -189,6 +195,7 @@ public class ExpenseTrackerController {
 		
 		modelAndView.addObject("expenseTracker",expenseTracker);
 		modelAndView.setViewName("/claim");
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;	
 	}
 	
@@ -201,6 +208,7 @@ public class ExpenseTrackerController {
 		
 		modelAndView.addObject("expenseClaim",expenseClaim);
 		modelAndView.setViewName("/claimapproval");
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;	
 	}
 	
@@ -226,7 +234,7 @@ public class ExpenseTrackerController {
 			modelAndView.addObject("successMessage", "expense cliam posted successfully.");
 		}
 		
-	
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 
 	}

@@ -120,7 +120,7 @@ public class JobPostController {
 		//Skill skill = skillService.findSkillById(Integer.parseInt(jobSkill.getTechnicalSkills()));
 		modelAndView.addObject("job", job);
 		modelAndView.setViewName("/jobinfoo");
-		//modelAndView.addObject("role", util.getRole());
+		modelAndView.addObject("role", util.getRole());
 		return modelAndView;
 		
 	}

@@ -41,7 +41,10 @@
 										<tr>
 											<th> Id</th>
 											<th>Job Title</th>
-											<th>Job description</th>
+											<th>Job Description</th>
+											<th>Job Designation</th>
+											<th>Job Duration</th>
+											<th>Job Location</th>
 											<!-- <th>User skill</th> -->
 
 											<th></th>
@@ -52,6 +55,9 @@
 											<td th:text="${app.id}">Id</td>
 											<td th:text="${app.job.title}">Title</td>
 											<td th:text="${app.job.description}">Description</td>
+											<td th:text="${app.job.designation}">Designation</td>
+											<td th:text="${app.job.duration}">Duration</td>
+											<td th:text="${app.job.location}">Location</td>
 											<!-- <td th:text="${app.user.sk}">Experience</td> -->
 
 
@@ -84,6 +90,9 @@
 											<th>User Id</th>
 											<th>User Name</th>
 											<th>User Email</th>
+										    <th>User Qualification</th>
+										    <th>User Designation</th>
+										    <th>User Skillset</th>
 											<!-- <th>User skill</th> -->
 
 											<th></th>
@@ -93,14 +102,26 @@
 										<tr th:each="app : ${app}">
 											<td th:text="${app.user.id}">Id</td>
 											<td th:text="${app.user.name}">Name</td>
-											<td th:text="${app.user.Email}">Experience</td>
+											<td th:text="${app.user.Email}">Email</td>
+											<td th:text="${app.user.qualification}">Qualification</td>
+											<td th:text="${app.user.designation}">Designation</td>
+											<td th:text="${app.user.skills}">Designation</td>
 											<!-- <td th:text="${app.user.sk}">Experience</td> -->
 
-
+                                           <td>
+                                           
+                                           
+                                           
+                                          <!--  <table class="table table-hover">
+										<tr th:each="skill : ${user.skills}">
+										<td th:text="${skill.skills.name}">skill name</td>
+										<td th:text="${skill.skillExperience}">skill experience</td>
+										 -->
 										</tr>
 
 
 									</table>
+									
 								</div>
 							</div>
 						</div>

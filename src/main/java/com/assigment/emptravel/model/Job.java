@@ -39,15 +39,16 @@ public class Job {
 	String title;
 	
 	
-	@NotEmpty(message = "*Please provide a title")
+	@NotEmpty(message = "*Please provide a description")
 	String description;
 	
 	@NotEmpty(message = "*Please provide a location")
 	String location;
 	
-	
+	@NotEmpty(message = "*Please provide experience")
 	int minExp;
 	
+	@NotEmpty(message = "*Please provide experience")
 	int maxExp;
 	
 	@OneToMany(mappedBy="job")
