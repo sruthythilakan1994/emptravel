@@ -22,7 +22,7 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<form autocomplete="off" action="#" th:action="@{'/tasktracker/add/' + ${item.tracker.id}}"
-					th:object="${item}" method="post" class="form-horizontal"
+					th:object="${item}" method="post" enctype="multipart/form-data"  class="form-horizontal"
 					role="form">
 					
 					<h2>Travel Task Tracker </h2>
@@ -117,8 +117,12 @@
 						</div>
 					</div>
 					
-						
 					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="file" name="file" />
+						</div>
+					</div>
 
 					<div class="form-group">
 						<div class="col-sm-9">
@@ -154,6 +158,7 @@
         				
         				<th>Status</th>
         				<th>Date</th>
+        				<th>Attachment</th>
         			
 
       			     </tr>
@@ -164,14 +169,10 @@
         					  <td th:text="${item.description}">Description</td>  
         					  <td th:text="${item.status}">Status</td>
         					  <td th:text="${item.startDate}">Date</td>
-        					  	 <td><a href="#" th:href="@{'/updatetracker/' + ${item.id}}">Edit</a>  </td>
-        					  
-        					 
-        					 
-        					 
+        					  <td> <a href="#" th:href="@{'/updatetracker/' + ${item.id}}">Edit</a>  </td>
+        					  <td th:if="${item.attachedfile}" ><a href="#"   th:href="@{'/todo/attachmentdownload/' + ${item.id}}">Download Attachment</a></td>
         			 </tr>
-        			 
-        			
+        				
     				 </table>
 				</div>
 			</div>	

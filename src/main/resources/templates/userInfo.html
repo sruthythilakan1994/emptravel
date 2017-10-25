@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{view.index.title}">Welcome!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
+
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/userInfo}"
+					th:object="${user}" method="POST" class="form-horizontal"
+					role="form">
+					
+					<h2>User Details</h2>
+					<br/><br/>
+					
+				  	 <div class="form-group">
+						<div class="col-sm-9">
+						<label	class="validation-message">Employee Id : </label>
+						<label th:text = "${id}"	class="validation-message"></label>
+						<input type="hidden" th:field="*{empId}"
+								class="form-control" /> 
+						</div>
+					</div>
+					 
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label	class="validation-message">First Name : </label>
+						<label th:text = "${user.name}"	class="validation-message"></label>
+						<input type="hidden" th:field="*{name}" 
+								class="form-control" /> 
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label	class="validation-message">Last Name : </label>
+						<label th:text = "${user.lastName}"	class="validation-message"></label>
+							<input type="hidden" th:field="*{lastName}"
+								class="form-control" /> 
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+						  <label	class="validation-message">Email : </label>
+						    <label th:text = "${user.email}"	class="validation-message"></label>
+							
+							   <input type="hidden" th:field="*{email}" class="form-control" />
+						 <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"class="validation-message"></label>
+						</div>
+				  </div>
+						
+						<div class="form-group">
+						   <div class="col-sm-9">
+						      <label	class="validation-message">Address : </label>
+						        <label th:text = "${user.address}"	class="validation-message"></label>
+							   <input type="hidden" th:field="*{lastName}"class="form-control" /> 
+						    </div>
+					   </div>
+						
+						<div class="form-group">
+						   <div class="col-sm-9">
+						        <label	class="validation-message">Designation : </label>
+						          <label th:text = "${user.designation}"	class="validation-message"></label>
+							   <input type="hidden" th:field="*{lastName}"class="form-control" /> 
+						    </div>
+						 </div>
+						
+						
+						<div class="form-group">
+						   <div class="col-sm-9">
+						     <label	class="validation-message">Qualification : </label>
+						       <label th:text = "${user.qualification}"	class="validation-message"></label>
+							    <input type="hidden" th:field="*{lastName}"class="form-control" /> 
+						   </div>
+						</div>
+						
+						
+						<div class="form-group">
+						   <div class="col-sm-9">
+						      <label	class="validation-message"> Total Experience(Months) : </label>
+						        <label th:text = "${user.expYears}"	class="validation-message"></label>
+							      <input type="hidden" th:field="*{lastName}"class="form-control" /> 
+						     </div>
+						 </div>
+						
+						
+						
+					
+					
+					
+					</form>
+					</div>
+					</div>
+					</div>
+
+	<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
+</body>
+</html>

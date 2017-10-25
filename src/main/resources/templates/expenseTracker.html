@@ -16,133 +16,38 @@
 	<div th:replace="fragments/header :: header">&nbsp;</div>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/expense/create}"
-					th:object="${expenseTracker}" method="post" class="form-horizontal"
-					role="form">
+		
+		<div class="panel-group" style="margin-top: 40px">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span>Expense Tracker</span>
+			</div>
+			<div class="panel-body">
+				<div class="panel-body">
+					<table class="table table-hover">
+						<tr>
+							<th>#</th>
+							<th>Job Title</th>
+							<th>Employee</th>
+							<th>Approver</th>
+							<th></th>
+						</tr>
 
-					<h2>Expense Tracker</h2>
-					<br />
-					<br />
-<!-- 
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label class="validation-message">Id</label> <input type="text"
-								th:field="*{id}" placeholder="Id" class="form-control" />
-						</div>
-					</div> -->
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-
-							<label class="validation-message">Job </label> 
-							<select
-								class="form-control" aria-describedby="status-addon"
-								id="technicalSkills" name="Job" th:field="*{job}">
-								<option th:each="job: ${jobs}" th:value="${job.id}"
-									th:text="${job.title}"></option>
-							</select>
-						</div>
-					</div>
-					
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-
-							<label class="validation-message">Employee  Name</label> 
-							<select
-								class="form-control" aria-describedby="status-addon"
-								id="technicalSkills" name="User" th:field="*{employee}">
-								<option th:each="user: ${users}" th:value="${user.id}"
-									th:text="${user.name}"></option>
-							</select>
-						</div>
-					</div>
-					
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label class="validation-message">Daily Allowance</label> <input
-								type="text" th:field="*{dailyAllowance}"
-								placeholder="Daily Allowance" class="form-control" />
-						</div>
-					</div>
-					
-					
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label class="validation-message">Food Expense</label> 
-							 <input type="text" th:field="*{foodExpense}" placeholder="Food Expense"
-								class="form-control" />
-						</div>
-					</div>
-					
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-
-							<label class="validation-message">Cab Expense</label> <input
-								type="text" th:field="*{cabExpense}" placeholder="cabExpense"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('cabExpense')}"
-								th:errors="*{cabExpense}" class="validation-message"></label>
-						</div>
-					</div>
-
-   
-					<div class="form-group">
-						<div class="col-sm-9">
-
-							<label class="validation-message">Country</label> <input
-								type="text" th:field="*{country}" placeholder="country"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('cabExpense')}"
-								th:errors="*{cabExpense}" class="validation-message"></label>
-						</div>
-					</div>
-
-					
-                    <div class="form-group">
-                        <div class="col-sm-9">
-                        <label class="validation-message">Start Date</label>
-                         <input type="text" th:field="*{startDate}"
-                                placeholder="" class="form-control"  />
-                            <label th:if="${#fields.hasErrors('startDate')}"
-                                th:errors="*{startDate}" class="validation-message"></label> 
-
-                        </div>
-                       </div> 
-                        
-                    <div class="form-group">
-                        <div class="col-sm-9">
-                        <label class="validation-message">End Date</label>
-                         <input type="text" th:field="*{endDate}"
-                                placeholder="" class="form-control"  />
-                            <label th:if="${#fields.hasErrors('endDate')}"
-                                th:errors="*{endDate}" class="validation-message"></label>
-                            
-
-                        </div>
-                       </div>
-                       
-                       <div class="form-group">
-						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Submit</button>
-						</div>
-					</div>
-					
-
-
-					<span th:utext="${successMessage}"></span> <br />
-					<br />
-					<br />
-					<br />
-
-				</form>
+						<tr th:each="tracker : ${expenseTrackers}">
+							<td th:text="${tracker.id}">Id</td>
+							<td th:text="${tracker.job.title}">Title</td>
+							<td th:text="${tracker.employee.email}">Description</td>
+							<td th:text="${tracker.manager.email}">Description</td>
+							<td><a href="#"
+								th:href="@{'/expense/claim/'+ ${tracker.id}}">claim</a></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
+	</div>
+		
+		
 	</div>
 
 	<hr>

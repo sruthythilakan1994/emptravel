@@ -11,9 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = " expenseclaim")
@@ -55,6 +57,31 @@ public class ExpenseClaim {
 	
 	String approverMessage;
 	
+	String attachedfile;
+	
+	@Transient
+	MultipartFile file;
+	
+	
+	
+	
+	
+	public String getAttachedfile() {
+		return attachedfile;
+	}
+
+	public void setAttachedfile(String attachedfile) {
+		this.attachedfile = attachedfile;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
 	public String getStatus() {
 		return status;
 	}

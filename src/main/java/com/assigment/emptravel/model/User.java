@@ -1,4 +1,5 @@
 package com.assigment.emptravel.model;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,11 +13,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "user")
@@ -123,8 +126,23 @@ public class User {
 	@OneToMany(mappedBy="user")
 	Set<TrackerItem> trackerItems;
 	
-	
-	
+	 @DateTimeFormat(pattern = "dd/MM/yyyy")
+	// @NotNull (message = "*Please provide your end date")
+	// @Column(name="end_date")
+	 private Date joinDate;
+	 
+	 
+	 
+
+	 
+	public Date getJoinDate() {
+		return joinDate;
+	}
+
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
+	}
+
 	public Set<ExpenseTracker> getExpenseTracker() {
 		return expenseTracker;
 	}

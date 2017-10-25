@@ -120,6 +120,14 @@
 				
 					
 					
+				<div  th:if="${expenseClaim.attachedfile}" class="form-group">
+						<div class="col-sm-9">
+							<a href="#" th:href="@{'/claim/attachmentdownload/' + ${expenseClaim.id}}">Download Attachment</a>
+						</div>
+				</div>
+				
+				
+					
 					
 					<div class="form-group">
 						<div class="col-sm-9">

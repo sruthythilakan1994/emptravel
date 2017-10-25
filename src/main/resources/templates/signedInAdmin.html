@@ -23,13 +23,39 @@
 					<span th:utext="${userName}"></span>
 				</div>
 				<div class="panel-body">
-
-
 					<div class="panel-body">
+
+						Users List
+						<table class="table table-hover">
+
+							<tr>
+                                <th>#</th>
+								<th>Name</th>
+								<th>Email</th>
+
+								<th></th>
+
+							</tr>
+
+							    <tr th:each="users : ${users}">
+							    <td th:text="${users.id}">Id</td>
+								<td th:text="${users.name}">Id</td>
+								<td th:text="${users.email}">Email</td>
+								<td><a href="#" th:href="@{'/userInfo/'+${users.id}}">UserInfo</a></td>
+								<!-- <td><a href="#" th:href="@{'/jobs/' + ${job.id}}">ShowDetails</a></td> -->
+							</tr>
+
+
+						</table>
 					</div>
-					</div>
-					</div>
-					</div>
-					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer :: footer">&nbsp;</div>
+
 </body>
 </html>

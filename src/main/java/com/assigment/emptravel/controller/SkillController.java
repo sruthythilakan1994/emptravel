@@ -57,9 +57,24 @@ public class SkillController {
 	@RequestMapping(value = "/skill/add", method = RequestMethod.POST)
 	public ModelAndView viewSkill(@Valid Skill skill, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
+		
+		boolean skillExists = false;
+		List<Skill> skills= skillService.findAll();
+		for (Skill s: skills) {
+			if (skill.getName().toLowerCase().equals(s.getName().toLowerCase())) {
+				skillExists=true;
+			}
+		}
+	
 		if (bindingResult.hasErrors()) {
+			modelAndView.addObject("skills", skillService.findAll());
 			modelAndView.setViewName("skill");
-		} else {
+		} else if (skillExists){
+			modelAndView.setViewName("skill");
+			modelAndView.addObject("skills", skillService.findAll());
+			modelAndView.addObject("successMessage", "skill already exists.");
+		}
+		else {
 			skillService.saveSkill(skill);
 			modelAndView.addObject("successMessage", "skill has been created successfully.");
 			modelAndView.setViewName("skill");

@@ -60,7 +60,12 @@
                  
                      <li>
                     <a href="#"  th:if="${role eq 'MANAGER'}" th:href="@{/expense}">Create Tracker</a>
-                     </li>     
+                     </li> 
+                     
+                     
+                      <li>
+                    <a href="#"  th:if="${role eq 'MANAGER' || role eq 'USER'}" th:href="@{/expensetracker}">Expense Tracker</a>
+                     </li>    
             </ul>
             <ul class="nav navbar-nav navbar-right">
             

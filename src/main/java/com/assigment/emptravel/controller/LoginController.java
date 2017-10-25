@@ -1,5 +1,7 @@
 package com.assigment.emptravel.controller;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -10,19 +12,23 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.assigment.emptravel.model.JobApplication;
+import com.assigment.emptravel.model.ExpenseTracker;
 import com.assigment.emptravel.model.Job;
 import com.assigment.emptravel.model.JobInfo;
 import com.assigment.emptravel.model.Role;
+import com.assigment.emptravel.model.Tracker;
 import com.assigment.emptravel.model.User;
 import com.assigment.emptravel.service.JobService;
 import com.assigment.emptravel.service.UserService;
 import com.assigment.emptravel.util.Util;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +50,7 @@ public class LoginController {
 	private Object applications;
 
 	
-	@RequestMapping(value={ "/","/login"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
@@ -52,12 +58,12 @@ public class LoginController {
 	}
 	
 	
-	/*@RequestMapping(value={ "/","/login"}, method = RequestMethod.GET)
-	public ModelAndView login(){
+	@RequestMapping(value={ "/"}, method = RequestMethod.GET)
+	public ModelAndView viewhome(){
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("login");
+		modelAndView.setViewName("home1");
 		return modelAndView;
-	}*/
+	}
 	
 	
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
@@ -110,6 +116,7 @@ public class LoginController {
 		userExists.setPassword(user.getPassword());
 		userExists.setAddress(user.getAddress());
 		userExists.setAccountNumber(user.getAccountNumber());
+		userExists.setJoinDate(user.getJoinDate());
 		//userExists.setPhoneNumber(user.getPhoneNumber());
 		userService.saveUser(userExists);
 		
@@ -165,12 +172,44 @@ public class LoginController {
 		logger.debug("Username ="+  user.getName() );
 		logger.debug("Username ="+  user.getEmail()  );
 		
+		
+		List<Job> jobsList= new ArrayList<>(jobService.findAll());
+		Collections.sort(jobsList, new Comparator<Job>() {  
+		    @Override  
+		    public int compare(Job p1, Job p2) {  
+		   	 return new CompareToBuilder().append(p1.getId(),p2.getId()).toComparison();  
+				    
+		    }  
+		}); 
+		
+		
+		
+		List<Tracker> todoTrackers= new ArrayList<>(user.getTrackers());
+		Collections.sort(todoTrackers, new Comparator<Tracker>() {  
+		    @Override  
+		    public int compare(Tracker p1, Tracker p2) {  
+		   	 return new CompareToBuilder().append(p1.getId(),p2.getId()).toComparison();  
+				    
+		    }  
+		}); 
+		
+		
+		List<ExpenseTracker> expenseTrackers= new ArrayList<>( user.getExpenseTracker());
+		Collections.sort(expenseTrackers, new Comparator<ExpenseTracker>() {  
+		    @Override  
+		    public int compare(ExpenseTracker p1, ExpenseTracker p2) {  
+		   	 return new CompareToBuilder().append(p1.getId(),p2.getId()).toComparison();  
+				    
+		    }  
+		}); 
+		
+		
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-		modelAndView.addObject("jobs", jobService.findAll());
+		modelAndView.addObject("jobs", jobsList);
 		modelAndView.addObject("role", util.getRole());
-		modelAndView.addObject("todoTrackers", user.getTrackers());
-		modelAndView.addObject("expenseTrackers", user.getExpenseTracker());
+		modelAndView.addObject("todoTrackers", todoTrackers);
+		modelAndView.addObject("expenseTrackers", expenseTrackers);
 		Set<JobApplication> applications= user.getApplications();
 		List<JobInfo> appliedJobList = new ArrayList<JobInfo>();
 		for ( JobApplication application : applications ){
@@ -211,10 +250,49 @@ public class LoginController {
 		
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-		modelAndView.addObject("postedJobs", user.getJobs());
-		modelAndView.addObject("jobs", jobService.findAll());
+		
+		
+		List<Job> jobsList= new ArrayList<>(jobService.findAll());
+		Collections.sort(jobsList, new Comparator<Job>() {  
+		    @Override  
+		    public int compare(Job p1, Job p2) {  
+		   	 return new CompareToBuilder().append(p1.getId(),p2.getId()).toComparison();  
+				    
+		    }  
+		}); 
+		
+		List<Job> postedJobsList= new ArrayList<>(user.getJobs());
+		Collections.sort(postedJobsList, new Comparator<Job>() {  
+		    @Override  
+		    public int compare(Job p1, Job p2) {  
+		   	 return new CompareToBuilder().append(p1.getId(),p2.getId()).toComparison();  
+				    
+		    }  
+		}); 
+		
+		List<Tracker> todoTrackers= new ArrayList<>(user.getTrackers());
+		Collections.sort(todoTrackers, new Comparator<Tracker>() {  
+		    @Override  
+		    public int compare(Tracker p1, Tracker p2) {  
+		   	 return new CompareToBuilder().append(p1.getId(),p2.getId()).toComparison();  
+				    
+		    }  
+		}); 
+		
+		
+		List<ExpenseTracker> expenseTrackers= new ArrayList<>( user.getExpenseTracker());
+		Collections.sort(expenseTrackers, new Comparator<ExpenseTracker>() {  
+		    @Override  
+		    public int compare(ExpenseTracker p1, ExpenseTracker p2) {  
+		   	 return new CompareToBuilder().append(p1.getId(),p2.getId()).toComparison();  
+				    
+		    }  
+		}); 
+		
+		modelAndView.addObject("postedJobs",postedJobsList);
+		modelAndView.addObject("jobs", jobsList);
 		modelAndView.addObject("role", util.getRole());
-		modelAndView.addObject("todoTrackers", user.getTrackers());
+		modelAndView.addObject("todoTrackers", todoTrackers);
 		modelAndView.addObject("expenseTrackers", user.getExpenseTracker());
 		Set<JobApplication> applications= user.getApplications();
 		List<JobInfo> appliedJobList = new ArrayList<JobInfo>();
@@ -256,14 +334,32 @@ public class LoginController {
 		
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-		
+		 List<User> users= userService.findAll();
+		 modelAndView.addObject("users", users);
 		modelAndView.addObject("role", util.getRole());
 		
-		modelAndView.setViewName("/adminSignedIn");
+		modelAndView.setViewName("/signedInAdmin");
 		
 	
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/userInfo/{id}", method = RequestMethod.GET)
+	public ModelAndView userInfo(@PathVariable long id ){
+		ModelAndView modelAndView = new ModelAndView();
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//User users = userService.findUserByEmail(auth.getName());
+	    User user=userService.findUserById(id);
+		
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("userInfo");
+		modelAndView.addObject("role", util.getRole());
+		return modelAndView;
+	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/appliedjob")
 	   public ModelAndView appliedJob() {

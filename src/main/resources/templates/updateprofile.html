@@ -90,22 +90,32 @@
 					</div>  
 		
 					
-					  <div class="form-group">
+				<!-- 	<div class="form-group">
 						<div class="col-sm-9">
 						    AccountNumber<input type="text" th:field="*{accountNumber}" placeholder="AccountNumber"
 						    class="form-control" /> 
 						</div>
-					</div> 
+					</div>  -->
 					
-			 	<div class="form-group">
+			 		<div class="form-group">
 						<div class="col-sm-9">
-							Total Experience (Months) <input type="text" th:field="*{expYears}" placeholder="Experiance"
+							Total Experience (Months) <input type="text" th:field="*{expYears}" placeholder="Experience"
 								class="form-control" /> <label
 								th:if="${#fields.hasErrors('expYears')}" th:errors="*{expYears}"
 								class="validation-message"></label>
 						</div>
 					</div>  
 					
+					<div class="form-group">
+                        <div class="col-sm-9">
+                        <label class="validation-message">Joined Date(DD/MM/YY)</label>
+                         <input type="text" th:field="*{joinDate}"
+                                placeholder="" class="form-control"  />
+                            <label th:if="${#fields.hasErrors('joinDate')}"
+                                th:errors="*{joinDate}" class="validation-message"></label>
+                       </div>
+                    </div>
+                    
 					<div class="form-group">
 						<div class="col-sm-9">
 							password<input type="password" th:field="*{password}"

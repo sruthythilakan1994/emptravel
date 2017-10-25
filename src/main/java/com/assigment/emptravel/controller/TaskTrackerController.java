@@ -1,8 +1,15 @@
 package com.assigment.emptravel.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.assigment.emptravel.model.ExpenseClaim;
 import com.assigment.emptravel.model.JobApplication;
 import com.assigment.emptravel.model.Skill;
 import com.assigment.emptravel.model.Tracker;
@@ -37,6 +45,7 @@ public class TaskTrackerController {
 	
 	@Autowired
 	Util util;
+	
 	@RequestMapping(value = "/tasktracker")
 	public ModelAndView viewtracker() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -58,7 +67,12 @@ public class TaskTrackerController {
 	public ModelAndView addtask(TrackerItem item, @PathVariable int id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
-		
+		byte[] bytes =null;
+		String fullFilePath=null;
+		if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
+		 fullFilePath= "/home/sruthy/emptravel_upload_files/" +new Date().getTime()+ "_" + item.getFile().getOriginalFilename();
+		}
+      
 		TrackerItem item1=new TrackerItem();
 		item1.setTitle(item.getTitle());
 		item1.setDescription(item.getDescription());
@@ -66,9 +80,21 @@ public class TaskTrackerController {
 		item1.setStartDate(item.getStartDate());
 		User user = userService.findUserByEmail(auth.getName());
 		
+		item.setAttachedfile(fullFilePath);
+		item1.setAttachedfile(fullFilePath);
 		Tracker tracker= trackerService.findById(id);
-		
 		trackerService.addItemsToTracker(item1, tracker, user);
+		
+		if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
+		try {
+			  bytes = item.getFile().getBytes();
+			  Path path = Paths.get(fullFilePath);
+	          Files.write(path, bytes);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -131,7 +157,30 @@ public class TaskTrackerController {
 		itemUpdate.setStartDate(new Date());
 		//itemUpdate.setStartDate(item.getStartDate());
 		
+		String fullFilePath=null;
+		byte[] bytes =null;
+		if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
+		 fullFilePath= "/home/sruthy/emptravel_upload_files/" +new Date().getTime()+ "_" + item.getFile().getOriginalFilename();
+		itemUpdate.setAttachedfile(fullFilePath);
+		}
+		
+		
 		trackerItemService.saveItem(itemUpdate);
+		
+		
+		
+		if (item.getFile().getOriginalFilename()!=null &&  item.getFile().getOriginalFilename().length() >3) {
+		
+		try {
+			  bytes = item.getFile().getBytes();
+			  Path path = Paths.get(fullFilePath);
+	          Files.write(path, bytes);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		
 		modelAndView.addObject("successMessage", "Updated successfully.");
 		modelAndView.addObject("item", itemUpdate);
 		//modelAndView.addObject("role", util.getRole());
@@ -142,5 +191,41 @@ public class TaskTrackerController {
 	
 	return modelAndView;
 	}
+	
+	
+	
+	   @RequestMapping("/todo/attachmentdownload/{id}")
+	    public void downloadPDFResource( HttpServletRequest request,
+	                                     HttpServletResponse response,
+	                                     @PathVariable("id") int id)
+	    {
+	        
+	    	TrackerItem item= trackerItemService.findById(id);
+	    	//If user is not authorized - he should be thrown out from here itself
+	         
+	        //Authorized user will download the file
+	        String filePath = item.getAttachedfile();
+	       
+	        Path file = Paths.get(filePath);
+	        
+	        
+	        String fileName=item.getAttachedfile().replaceAll("/home/sruthy/emptravel_upload_files/", "");
+	        
+	        if (Files.exists(file))
+	        {
+	            response.setContentType("application/octet-stream");
+	            response.addHeader("Content-Disposition", "attachment; filename="+fileName);
+	            try
+	            {
+	                Files.copy(file, response.getOutputStream());
+	                response.getOutputStream().flush();
+	            }
+	            catch (IOException ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	    }
+	   
+	
 	
 }

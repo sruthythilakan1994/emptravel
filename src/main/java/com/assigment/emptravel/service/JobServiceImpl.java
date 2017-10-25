@@ -119,6 +119,7 @@ public class JobServiceImpl implements JobService{
 		Set<JobApplication> applications = job.getApplications();
 		Map<Integer,Integer> jobSkillsMap= getJobSkillMap( jobSkills);
 		
+		
 		for (JobApplication application: applications) {
 			Set <SkillSet> userSkills= application.getUser().getSkills();
 			Map<Integer,Integer>  userSkillsMap= getUserSkillMap( userSkills);
@@ -153,10 +154,10 @@ public class JobServiceImpl implements JobService{
 		    @Override  
 		    public int compare(JobApplication p1, JobApplication p2) {  
 		    //    return new CompareToBuilder().append(p1.getUser().getExpYears(),p2.getUser().getExpYears()).append(p1.nrOfToppings, p2.nrOfToppings).append(p1.name, p2.name).toComparison();  
-		    	 return new CompareToBuilder().append(p1.getUser().getExpYears(),p2.getUser().getExpYears()).toComparison();  
+		    	 return new CompareToBuilder().append(p1.getUser().getJoinDate(),p2.getUser().getJoinDate()).toComparison();  
 				    
 		    }  
-		});  
+		}); 
 	
 		
 		

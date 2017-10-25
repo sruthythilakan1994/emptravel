@@ -12,9 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "trackerItem1")
@@ -49,6 +51,29 @@ public class TrackerItem {
 	
 	@OneToMany(mappedBy="item")
 	Set<Attachment> attachments;
+
+	String attachedfile;
+	
+	@Transient
+	MultipartFile file;
+	
+	
+	
+	public String getAttachedfile() {
+		return attachedfile;
+	}
+
+	public void setAttachedfile(String attachedfile) {
+		this.attachedfile = attachedfile;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
 	public long getId() {
 		return id;
