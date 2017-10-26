@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -64,47 +65,71 @@ public class TaskTrackerController {
 	
 	
 	@RequestMapping(value = "/tasktracker/add/{id}")
-	public ModelAndView addtask(TrackerItem item, @PathVariable int id) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		byte[] bytes =null;
-		String fullFilePath=null;
-		if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
-		 fullFilePath= "/home/sruthy/emptravel_upload_files/" +new Date().getTime()+ "_" + item.getFile().getOriginalFilename();
-		}
-      
-		TrackerItem item1=new TrackerItem();
-		item1.setTitle(item.getTitle());
-		item1.setDescription(item.getDescription());
-		item1.setStatus(item.getStatus());
-		item1.setStartDate(item.getStartDate());
-		User user = userService.findUserByEmail(auth.getName());
-		
-		item.setAttachedfile(fullFilePath);
-		item1.setAttachedfile(fullFilePath);
-		Tracker tracker= trackerService.findById(id);
-		trackerService.addItemsToTracker(item1, tracker, user);
-		
-		if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
-		try {
-			  bytes = item.getFile().getBytes();
-			  Path path = Paths.get(fullFilePath);
-	          Files.write(path, bytes);
-			} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
-		
+	public ModelAndView addtask(@Valid TrackerItem item,  BindingResult bindingResult, @PathVariable int id) {
 		ModelAndView modelAndView = new ModelAndView();
 		
-		List<TrackerItem> xx= trackerService.findById(id).getActionItems() ;
+		if (bindingResult.hasErrors()) {
+			
+			modelAndView.addObject("item", item);
+			modelAndView.addObject("actionItems",trackerService.findById(id).getActionItems() );
+			modelAndView.setViewName("item");
+			
+			if (item.getTitle()==null ||item.getTitle().length()<1) {
+				modelAndView.addObject("successMessage", "Please provide title");
+			}
+			if (item.getDescription()==null ||item.getDescription().length()<1) {
+				modelAndView.addObject("successMessage", "Please provide description");
+			}
+			if ((item.getTitle()==null ||item.getTitle().length()<1) && (item.getDescription()==null ||item.getDescription().length()<1)){
+				modelAndView.addObject("successMessage", "Please provide title and decription");
+			}
+			
+		}else {
 		
-		modelAndView.addObject("item", item);
-		modelAndView.addObject("actionItems",trackerService.findById(id).getActionItems() );
-		modelAndView.setViewName("item");
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			
+			byte[] bytes =null;
+			String fullFilePath=null;
+			if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
+			 fullFilePath= "/home/sruthy/emptravel_upload_files/" +new Date().getTime()+ "_" + item.getFile().getOriginalFilename();
+			}
+	      
+			TrackerItem item1=new TrackerItem();
+			item1.setTitle(item.getTitle());
+			item1.setDescription(item.getDescription());
+			item1.setStatus(item.getStatus());
+			item1.setStartDate(item.getStartDate());
+			User user = userService.findUserByEmail(auth.getName());
+			
+			item.setAttachedfile(fullFilePath);
+			item1.setAttachedfile(fullFilePath);
+			Tracker tracker= trackerService.findById(id);
+			trackerService.addItemsToTracker(item1, tracker, user);
+			
+			if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
+			try {
+				  bytes = item.getFile().getBytes();
+				  Path path = Paths.get(fullFilePath);
+		          Files.write(path, bytes);
+				} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
 		
-		modelAndView.addObject("role", util.getRole());
+			
+			List<TrackerItem> xx= trackerService.findById(id).getActionItems() ;
+			
+			modelAndView.addObject("item", item);
+			modelAndView.addObject("actionItems",trackerService.findById(id).getActionItems() );
+			modelAndView.setViewName("item");
+			
+		
+
+			
+		}
+		modelAndView.addObject("role", util.getRole());	
 		return modelAndView ;
 
 }
@@ -149,44 +174,70 @@ public class TaskTrackerController {
 	
 	@RequestMapping(value="/updatetracker/{id}", method = RequestMethod.POST)
 	public ModelAndView editTracker(TrackerItem item,@PathVariable int id, BindingResult bindingResult){
+	
 		ModelAndView modelAndView = new ModelAndView();
-		TrackerItem  itemUpdate =trackerItemService.findById(id);
-		itemUpdate.setDescription(item.getDescription());
-		itemUpdate.setTitle(item.getTitle());
-		itemUpdate.setStatus(item.getStatus());
-		itemUpdate.setStartDate(new Date());
-		//itemUpdate.setStartDate(item.getStartDate());
-		
-		String fullFilePath=null;
-		byte[] bytes =null;
-		if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
-		 fullFilePath= "/home/sruthy/emptravel_upload_files/" +new Date().getTime()+ "_" + item.getFile().getOriginalFilename();
-		itemUpdate.setAttachedfile(fullFilePath);
+		if (bindingResult.hasErrors()) {
+			
+			TrackerItem  traskerItem = trackerItemService.findById(id);
+			modelAndView.addObject("item", item);
+			//modelAndView.addObject("role", util.getRole());
+			modelAndView.addObject("actionItems",traskerItem.getTracker().getActionItems() );
+			modelAndView.addObject("role", util.getRole());
+			
+			if (item.getTitle()==null ||item.getTitle().length()<1) {
+				modelAndView.addObject("successMessage", "Please provide title");
+			}
+			if (item.getDescription()==null ||item.getDescription().length()<1) {
+				modelAndView.addObject("successMessage", "Please provide description");
+			}
+			if ((item.getTitle()==null ||item.getTitle().length()<1) && (item.getDescription()==null ||item.getDescription().length()<1)){
+				modelAndView.addObject("successMessage", "Please provide title and decription");
+			}
+			
+		}else {
+			
+			TrackerItem  itemUpdate =trackerItemService.findById(id);
+			itemUpdate.setDescription(item.getDescription());
+			itemUpdate.setTitle(item.getTitle());
+			itemUpdate.setStatus(item.getStatus());
+			itemUpdate.setStartDate(new Date());
+			//itemUpdate.setStartDate(item.getStartDate());
+			
+			String fullFilePath=null;
+			byte[] bytes =null;
+			if (item.getFile().getOriginalFilename()!=null && item.getFile().getOriginalFilename().length() >3) {
+			 fullFilePath= "/home/sruthy/emptravel_upload_files/" +new Date().getTime()+ "_" + item.getFile().getOriginalFilename();
+			itemUpdate.setAttachedfile(fullFilePath);
+			}
+			
+			
+			trackerItemService.saveItem(itemUpdate);
+			
+			
+			
+			if (item.getFile().getOriginalFilename()!=null &&  item.getFile().getOriginalFilename().length() >3) {
+			
+			try {
+				  bytes = item.getFile().getBytes();
+				  Path path = Paths.get(fullFilePath);
+		          Files.write(path, bytes);
+				} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			
+			modelAndView.addObject("successMessage", "Updated successfully.");
+			modelAndView.addObject("item", itemUpdate);
+			//modelAndView.addObject("role", util.getRole());
+			modelAndView.addObject("actionItems",itemUpdate.getTracker().getActionItems() );
+			modelAndView.addObject("role", util.getRole());
+			modelAndView.setViewName("/updatetracker");
+			
 		}
 		
 		
-		trackerItemService.saveItem(itemUpdate);
 		
-		
-		
-		if (item.getFile().getOriginalFilename()!=null &&  item.getFile().getOriginalFilename().length() >3) {
-		
-		try {
-			  bytes = item.getFile().getBytes();
-			  Path path = Paths.get(fullFilePath);
-	          Files.write(path, bytes);
-			} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
-		
-		modelAndView.addObject("successMessage", "Updated successfully.");
-		modelAndView.addObject("item", itemUpdate);
-		//modelAndView.addObject("role", util.getRole());
-		modelAndView.addObject("actionItems",itemUpdate.getTracker().getActionItems() );
-		modelAndView.addObject("role", util.getRole());
-		modelAndView.setViewName("/updatetracker");
 		
 	
 	return modelAndView;

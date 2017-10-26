@@ -13,7 +13,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -63,11 +66,11 @@ public class User {
 	
 
 	@Column(name = "designation")
-	@NotEmpty(message = "*Please provide your designation")
+	//@NotEmpty(message = "*Please provide your designation")
 	private String designation;
 
 	@Column(name = "qualification")
-	@NotEmpty(message = "*Please provide your qualification")
+	//@NotEmpty(message = "*Please provide your qualification")
 	private String qualification;
 	
 	@Column(name = "address")
@@ -89,8 +92,9 @@ public class User {
 	
 
 	@Column(name = "exp_years")
+	@Min(value=0)
+	@Max(value = 1000)
 	private int expYears;
-	
 	
 	@Column(name = "active")
 	private int active;

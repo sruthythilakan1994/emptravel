@@ -52,6 +52,10 @@
 					<div class="form-group">
 						<div class="col-sm-9">
 						<label	class="validation-message">	Job Title: </label>
+						
+						<label th:if="${#fields.hasErrors('tracker.job.title')}" th:errors="*{tracker.job.title}"
+								class="validation-message"></label>
+						
 				        <label th:text = "${item.tracker.job.title}"	class="validation-message"></label>
 						<input type="hidden" th:field="*{tracker.job.title}" placeholder="name"
 								class="form-control" /> 

@@ -29,6 +29,7 @@ import com.assigment.emptravel.service.UserService;
 import com.assigment.emptravel.util.Util;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +62,8 @@ public class LoginController {
 	@RequestMapping(value={ "/"}, method = RequestMethod.GET)
 	public ModelAndView viewhome(){
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("home1");
+		//modelAndView.setViewName("home1");
+		modelAndView.setViewName("login");
 		return modelAndView;
 	}
 	
@@ -101,28 +103,91 @@ public class LoginController {
 	
 	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
 	public ModelAndView createNewUser1(@Valid User user, BindingResult bindingResult) {
-	
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User userExists = userService.findUserByEmail(auth.getName());
-		//User userExists = userService.findUserByEmpId(user.getEmpId());
-		
-		//userExists.setEmpId(user.getEmpId());
-		userExists.setDesignation(user.getDesignation());
-		userExists.setQualification(user.getQualification());
-		userExists.setExpYears(user.getExpYears());
-		userExists.setName(user.getName());
-		userExists.setLastName(user.getLastName());
-		userExists.setEmail(user.getEmail());
-		userExists.setPassword(user.getPassword());
-		userExists.setAddress(user.getAddress());
-		userExists.setAccountNumber(user.getAccountNumber());
-		userExists.setJoinDate(user.getJoinDate());
-		//userExists.setPhoneNumber(user.getPhoneNumber());
-		userService.saveUser(userExists);
-		
+
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("updateprofile");
-		modelAndView.addObject("role",util.getRole());
+		
+		if (user.getAddress()==null || user.getAddress().length()<1){
+			bindingResult
+			.rejectValue("address", "error.user",
+					"Please provide address");
+		}
+		
+		if (user.getDesignation()==null || user.getDesignation().length()<1 ){
+			bindingResult
+			.rejectValue("designation", "error.user",
+					"Please provide designation");
+		}
+		
+		if (user.getQualification()==null || user.getQualification().length()<1){
+			bindingResult
+			.rejectValue("qualification", "error.user",
+					"Please provide qualification");
+		}
+		
+		
+		
+		if (user.getJoinDate()==null ){
+			bindingResult
+			.rejectValue("joinDate", "error.user",
+					"Please provide joinDate");
+		}
+		
+		if (user.getJoinDate()!=null ){
+			DateTime joinDate= null;
+			try {
+				 joinDate = new DateTime(user.getJoinDate());
+			}
+			catch (Exception e) {
+				bindingResult
+				.rejectValue("joinDate", "error.user",
+						"Please provide valid join date");
+			}
+			
+			if (joinDate.isAfterNow() ) {
+				bindingResult
+				.rejectValue("joinDate", "error.user",
+						"Please provide past date");
+			}
+			
+		}
+		
+		
+		
+		
+		if (bindingResult.hasErrors()) {
+			modelAndView.addObject("successMessage", bindingResult.toString());
+			modelAndView.setViewName("updateprofile");
+			modelAndView.addObject("role",util.getRole());
+			modelAndView.addObject("user", user);
+			
+		}
+		else {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User userExists = userService.findUserByEmail(auth.getName());
+			//User userExists = userService.findUserByEmpId(user.getEmpId());
+			
+			//userExists.setEmpId(user.getEmpId());
+			userExists.setDesignation(user.getDesignation());
+			userExists.setQualification(user.getQualification());
+			userExists.setExpYears(user.getExpYears());
+			userExists.setName(user.getName());
+			userExists.setLastName(user.getLastName());
+			userExists.setEmail(user.getEmail());
+			userExists.setPassword(user.getPassword());
+			userExists.setAddress(user.getAddress());
+			userExists.setAccountNumber(user.getAccountNumber());
+			userExists.setJoinDate(user.getJoinDate());
+			//userExists.setPhoneNumber(user.getPhoneNumber());
+			userService.saveUser(userExists);
+			
+			modelAndView.setViewName("updateprofile");
+			modelAndView.addObject("role",util.getRole());
+			modelAndView.addObject("user", userExists);
+			
+			modelAndView.addObject("successMessage", "Profile updated successfully");
+			
+		}
+		
 		return modelAndView;
 }
 
@@ -139,7 +204,7 @@ public class LoginController {
 			logger.warn("Triing to create user name same name ");
 		}
 		if (bindingResult.hasErrors()) {
-			modelAndView.addObject("successMessage", bindingResult.toString());
+			//modelAndView.addObject("successMessage", bindingResult.toString());
 			modelAndView.setViewName("registration1");
 		} else {
 			

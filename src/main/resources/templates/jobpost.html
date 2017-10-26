@@ -48,7 +48,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	class="validation-message">Min Exp</label>
+						<label	class="validation-message">Min Experience (in Year)</label>
 						
 						<label	th:if="${#fields.hasErrors('minExp')}" th:errors="*{minExp}"
 								class="validation-message"></label>
@@ -61,7 +61,7 @@
 					<div class="form-group">
 						<div class="col-sm-9">
 						
-							<label	class="validation-message">Max Exp</label>
+							<label	class="validation-message">Max Experience (in Year))</label>
 						
 							<input type="text" th:field="*{maxExp}" placeholder="maxExp"
 								class="form-control" /> <label

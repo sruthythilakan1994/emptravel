@@ -30,122 +30,13 @@
 					<br />
 
 
-					<div class="panel-group">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<span th:utext="${userName}"></span>
-							</div>
-							<div class="panel-body">
-
-								<div class="panel-body">
-									<h5>Job Details</h5>
-									<table class="table table-hover">
-
-										<tr>
-											<th> Id</th>
-											<th>Job Title</th>
-											<th>Job Description</th>
-											<th>Job Designation</th>
-											<th>Job Duration</th>
-											<th>Job Location</th>
-											<!-- <th>User skill</th> -->
-
-											<th></th>
-
-										</tr>
-
-										<tr th:each="app : ${app}">
-											<td th:text="${app.id}">Id</td>
-											<td th:text="${app.job.title}">Title</td>
-											<td th:text="${app.job.description}">Description</td>
-											<td th:text="${app.job.designation}">Designation</td>
-											<td th:text="${app.job.duration}">Duration</td>
-											<td th:text="${app.job.location}">Location</td>
-											<!-- <td th:text="${app.user.sk}">Experience</td> -->
-
-
-										</tr>
-
-
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-
+					
 
 
 					
 
 
-					<div class="panel-group">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<span th:utext="${userName}"></span>
-							</div>
-							<div class="panel-body">
-
-								<div class="panel-body">
-									<h5>User Details</h5>
-									<table class="table table-hover">
-
-										<tr>
-											<th>User Id</th>
-											<th>User Name</th>
-											<th>User Email</th>
-										    <th>User Qualification</th>
-										    <th>User Designation</th>
-										    <th>User Skillset</th>
-											<!-- <th>User skill</th> -->
-
-											<th></th>
-
-										</tr>
-
-										<tr th:each="app : ${app}">
-											<td th:text="${app.user.id}">Id</td>
-											<td th:text="${app.user.name}">Name</td>
-											<td th:text="${app.user.Email}">Email</td>
-											<td th:text="${app.user.qualification}">Qualification</td>
-											<td th:text="${app.user.designation}">Designation</td>
-											
-											
-											
-											
-											
-											<td>	
-												<table class="table table-hover">
-													<tr th:each="skills : ${app.user.skills}">
-														<td th:text="${skills.skill.name}">skill name</td>
-														<td th:text="${skills.skillExperience}">skill experience</td>
-
-													</tr>
-												</table>
-											</td>
-											
-											
-											
-											<!-- <td th:text="${app.user.skills}">Designation</td> -->
-											<!-- <td th:text="${app.user.sk}">Experience</td> -->
-
-                                           <td>
-                                           
-                                           
-                                           
-                                          <!--  <table class="table table-hover">
-										<tr th:each="skill : ${user.skills}">
-										<td th:text="${skill.skills.name}">skill name</td>
-										<td th:text="${skill.skillExperience}">skill experience</td>
-										 -->
-										</tr>
-
-
-									</table>
-									
-								</div>
-							</div>
-						</div>
-					</div>
+					
 
 
 
@@ -187,6 +78,123 @@
 				</form>
 			</div>
 		</div>
+		
+		
+		<div class="panel-group">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<span>Applicant Info</span>
+							</div>
+							<div class="panel-body">
+
+								<div class="panel-body">
+									<h5>User Details</h5>
+									<table class="table table-hover">
+
+										<tr>
+											<th> Id</th>
+											<th> Name</th>
+											<th> Email</th>
+										    <th> Qualification</th>
+										    <th> Designation</th>
+										    <th> Join Date</th>
+										    <th> Exp (Year)</th>
+										    <th> Skillset</th>
+											<!-- <th>User skill</th> -->
+
+											<th></th>
+
+										</tr>
+
+										<tr th:each="app : ${app}">
+											<td th:text="${app.user.id}">Id</td>
+											<td th:text="${app.user.name}">Name</td>
+											<td th:text="${app.user.Email}">Email</td>
+											<td th:text="${app.user.qualification}">Qualification</td>
+											<td th:text="${app.user.designation}">Designation</td>
+											<td th:text="${#dates.format(app.user.joinDate, 'dd-MMM-yyyy')}" >Designation</td>
+											<td th:text="${app.user.expYears}">Designation</td>
+											
+											
+											<td>	
+												<table class="table table-hover">
+													<tr th:each="skills : ${app.user.skills}">
+														<td th:text="${skills.skill.name}">skill name</td>
+														<td th:text="${skills.skillExperience}">skill experience</td>
+
+													</tr>
+												</table>
+											</td>
+					
+									</table>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+		
+		
+		
+		
+		<div class="panel-group">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<span>Job Info</span>
+							</div>
+							<div class="panel-body">
+
+								<div class="panel-body">
+									<h5>Job Details</h5>
+									<table class="table table-hover">
+
+										<tr>
+											<th> Id</th>
+											<th> Title</th>
+											<th> Description</th>
+											<th> Designation</th>
+											<th> Duration</th>
+											<th> Min Exp</th>
+											<th> Max Exp</th>
+											 <th> skill</th>
+
+											<th></th>
+
+										</tr>
+
+										<tr th:each="app : ${app}">
+											<td th:text="${app.id}">Id</td>
+											<td th:text="${app.job.title}">Title</td>
+											<td th:text="${app.job.description}">Description</td>
+											<td th:text="${app.job.designation}">Designation</td>
+											<td th:text="${app.job.duration}">Duration</td>
+											<td th:text="${app.job.minExp}">Location</td>
+											<td th:text="${app.job.maxExp}">Location</td>
+											
+											
+											
+											
+											<td>	
+												<table class="table table-hover">
+													<tr th:each="skills : ${app.job.skill}">
+														<td th:text="${skills.skill.name}">skill name</td>
+														<td th:text="${skills.skillExperience}">skill experience</td>
+
+													</tr>
+												</table>
+											</td>
+											
+
+
+										</tr>
+
+
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+		
+		
 	</div>
 
 	<hr>

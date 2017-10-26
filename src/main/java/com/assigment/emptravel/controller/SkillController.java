@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.hibernate.mapping.Set;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -104,23 +104,46 @@ public class SkillController {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
+		
+		boolean isExists=false;
+		Set<SkillSet>  skillSet = user.getSkills();
+		for (SkillSet skills : skillSet) {
+			if(skills.getTechnicalSkills().equals(skills.getTechnicalSkills())){
+				isExists= true;
+				break;
+			}
+		}
+		if (isExists) {
+			
+			modelAndView.addObject("successMessage", "The skill provided already exists");
+		}
+		else {
+			Skill skill = skillService.findSkillById(Integer.parseInt(skillentry.getTechnicalSkills()));
+			skillService.skillSetCreate(skillentry, user, skill);
+			// skillentry.setUser(user);
+			// skillentry.setSkill(skill);
 
-		Skill skill = skillService.findSkillById(Integer.parseInt(skillentry.getTechnicalSkills()));
-		skillService.skillSetCreate(skillentry, user, skill);
-		// skillentry.setUser(user);
-		// skillentry.setSkill(skill);
+			// save skillentry using repo
+			// SkillSet.setUser(user.getSkills());
 
-		// save skillentry using repo
-		// SkillSet.setUser(user.getSkills());
-
-		modelAndView.setViewName("skillset");
-		// SkillSet skill = new SkillSet();
+			modelAndView.setViewName("skillset");
+			// SkillSet skill = new SkillSet();
+			
+			// Set<SkillSet> skills = user.getSkills();
+			
+			modelAndView.addObject("successMessage", "Skill Added successfully");
+			
+		}
+		
 		modelAndView.addObject("skillSet", skillentry);
 		modelAndView.addObject("skills", skillService.findAll());
 		modelAndView.addObject("allSkills", user.getSkills());
-		// Set<SkillSet> skills = user.getSkills();
+		
+		modelAndView.setViewName("skillset");
 		modelAndView.addObject("role", util.getRole());
-
+		
+		
+	
 		return modelAndView;
 	}
 	/*

@@ -1,5 +1,6 @@
 package com.assigment.emptravel.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,9 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Job {
@@ -45,10 +48,10 @@ public class Job {
 	@NotEmpty(message = "*Please provide a location")
 	String location;
 	
-	@NotEmpty(message = "*Please provide experience")
+	@NotNull(message = "*Please provide experience")
 	int minExp;
 	
-	@NotEmpty(message = "*Please provide experience")
+	@NotNull(message = "*Please provide experience")
 	int maxExp;
 	
 	@OneToMany(mappedBy="job")
@@ -76,6 +79,16 @@ public class Job {
 	@OneToMany (mappedBy="job")
 	Set<ExpenseTracker> expenseTracker;
 	
+		
+	/* @Column(name="start_date")
+	 private Date postedDate;
+	   
+
+	 @DateTimeFormat(pattern = "dd/MM/yyyy")
+	 @NotNull (message = "*Please provide last date to apply")
+	 @Column(name="end_date")
+	 private Date lastDate ;
+	*/
 	
 	
 	
@@ -107,17 +120,7 @@ public class Job {
 */
 	
 
-	public Job() {
-		super();
-	}
-
-	public Job(int id, String title, String description) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
 	
-	}
 
 	public int getId() {
 		return id;

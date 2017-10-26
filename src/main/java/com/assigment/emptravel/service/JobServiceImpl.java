@@ -140,7 +140,7 @@ public class JobServiceImpl implements JobService{
 			//user profile exp
 			int jobMinExp= job.getMinExp();
 			int jobMaxExp= job.getMaxExp();
-			if (application.getUser().getExpYears()< jobMaxExp && application.getUser().getExpYears()> jobMinExp ) {
+			if (application.getUser().getExpYears() < jobMaxExp && application.getUser().getExpYears()>= jobMinExp ) {
 			}
 			else {
 				filteredApplications.remove(application);

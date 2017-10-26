@@ -29,7 +29,9 @@
 							<th>#</th>
 							<th>Job Title</th>
 							<th>Employee</th>
-							<th>Approver</th>
+							<th>Travel Date</th>
+							<th>Return Date</th>
+							<th>Country</th>
 							<th></th>
 						</tr>
 
@@ -37,10 +39,13 @@
 							<td th:text="${tracker.id}">Id</td>
 							<td th:text="${tracker.job.title}">Title</td>
 							<td th:text="${tracker.employee.email}">Description</td>
-							<td th:text="${tracker.manager.email}">Description</td>
+							<td th:text="${#dates.format(tracker.startDate, 'dd-MMM-yyyy')}">Description</td>
+							<td th:text="${#dates.format(tracker.endDate, 'dd-MMM-yyyy')}">Description</td>
+							<td th:text="${tracker.country}">Description</td>
 							<td><a href="#"
 								th:href="@{'/expense/claim/'+ ${tracker.id}}">claim</a></td>
 						</tr>
+						
 					</table>
 				</div>
 			</div>

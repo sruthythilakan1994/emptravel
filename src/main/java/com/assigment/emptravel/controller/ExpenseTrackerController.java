@@ -4,14 +4,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -68,7 +73,8 @@ public class ExpenseTrackerController {
 		return modelAndView ;
 
 	}
-	@RequestMapping(value = "/expense" )
+	
+	@RequestMapping(value = "/createExpenseTracker" )
 	public ModelAndView createExpense() {
 		ModelAndView modelAndView = new ModelAndView();
 			
@@ -79,32 +85,46 @@ public class ExpenseTrackerController {
 						 modelAndView.addObject("jobs", jobs);
 						 modelAndView.addObject("expenseTracker", expenseTracker);
 						// modelAndView.addObject("successMessage", "expense tracker has been created successfully.");
-						 modelAndView.setViewName("/expenseTracker");
+						 modelAndView.setViewName("/createExpenseTracker");
 						 modelAndView.addObject("role", util.getRole());
 					return modelAndView;	
 	}
 	
 	
 	@RequestMapping(value = "/expense/create",  method = RequestMethod.POST)
-	public ModelAndView createExpense(   ExpenseTracker expenseTracker) {
+	public ModelAndView createExpense(  @Valid ExpenseTracker expenseTracker,  BindingResult bindingResult) {
+		
+		
+		
 		ModelAndView modelAndView = new ModelAndView();
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User manager = userService.findUserByEmail(auth.getName());
 		User employee = userService.findUserById( expenseTracker.getEmployee().getId());
 		Job job= jobService.findById( expenseTracker.getJob().getId() );
-		expenseTrackerService.saveExpenseTracker(expenseTracker, manager, employee, job);
-			            
-		 List<User> users= userService.findAll();
-		 List<Job> jobs= jobService.findAll();
-		 modelAndView.addObject("users", users);
-		 modelAndView.addObject("jobs", jobs);
-		 modelAndView.addObject("expenseTracker",expenseTracker);
-			          
-						 modelAndView.addObject("successMessage", "expense tracker has been created successfully.");
-						 modelAndView.setViewName("/expenseTracker");
-						 modelAndView.addObject("role", util.getRole());
-					return modelAndView;
+		
+		if (bindingResult.hasErrors()) {
+			
+			 List<User> users= userService.findAll();
+			 List<Job> jobs= jobService.findAll();
+			 modelAndView.addObject("users", users);
+			 modelAndView.addObject("jobs", jobs);
+			 modelAndView.addObject("expenseTracker",expenseTracker);	
+			
+		}
+		else {
+			 expenseTrackerService.saveExpenseTracker(expenseTracker, manager, employee, job);
+			 List<User> users= userService.findAll();
+			 List<Job> jobs= jobService.findAll();
+			 modelAndView.addObject("users", users);
+			 modelAndView.addObject("jobs", jobs);
+			 modelAndView.addObject("expenseTracker",expenseTracker);
+			 modelAndView.addObject("successMessage", "expense tracker has been created successfully.");
+		}
+		 modelAndView.setViewName("/createExpenseTracker");
+		 modelAndView.addObject("role", util.getRole());
+			
+		return modelAndView;
 		
 	}
 	
@@ -172,13 +192,13 @@ public class ExpenseTrackerController {
 			if (toDate.isAfter(endDate)  || toDate.isBefore(startDate)) {
 				bindingResult
 				.rejectValue("toDate", "error.user",
-						"toDate is invalid");
+						"To date is not in beteen tracker start and end date");
 				
 			}
-			if (toDate.isAfter(fromDate) ) {
+			if (!toDate.isAfter(fromDate) ) {
 				bindingResult
 				.rejectValue("toDate", "error.user",
-						"toDate is invalid");
+						"To date should greater than from date");
 				
 			}
 			//fromDate 
@@ -194,7 +214,7 @@ public class ExpenseTrackerController {
 			
 			modelAndView.setViewName("expenseClaim");
 		
-			
+			modelAndView.addObject("successMessage", "Could not posted successfully.");
 				            
 			modelAndView.addObject("expenseClaim", expenseClaim);
 			modelAndView.setViewName("/expenseClaim");
@@ -325,11 +345,20 @@ public class ExpenseTrackerController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User user = userService.findUserByEmail(auth.getName());
 			
-			
-			
 			ModelAndView modelAndView = new ModelAndView();
 		
-			modelAndView.addObject("expenseTrackers",user.getExpenseTracker() );
+
+			List<ExpenseTracker> trackerList= new ArrayList<>(user.getExpenseTracker());
+			Collections.sort(trackerList, new Comparator<ExpenseTracker>() {  
+			    @Override  
+			    public int compare(ExpenseTracker p1, ExpenseTracker p2) {  
+			   	 return new CompareToBuilder().append(p1.getId(),p2.getId()).toComparison();  
+					    
+			    }  
+			}); 
+			
+			
+			modelAndView.addObject("expenseTrackers",trackerList );
 			modelAndView.setViewName("expenseTracker");
 			modelAndView.addObject("role", util.getRole());
 			return modelAndView ;
