@@ -8,6 +8,31 @@
 	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
     
+    
+     <script>
+function checkOnlyNumber(ob) {
+  var invalidChars = /[^0-9]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+
+function checkNumberWithPoint(ob) {
+  var invalidChars = /[^0-9.]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+function checkOnlyDate(ob) {
+  var invalidChars = /[^0-9/]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+
+</script>
+    
+   
 </head>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>

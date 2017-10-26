@@ -11,6 +11,31 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
 
+
+ <script>
+function checkOnlyNumber(ob) {
+  var invalidChars = /[^0-9]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+
+function checkNumberWithPoint(ob) {
+  var invalidChars = /[^0-9.]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+function checkOnlyDate(ob) {
+  var invalidChars = /[^0-9/]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+
+</script>
+
+
 </head>
 
 <body>
@@ -66,7 +91,7 @@
 						<div class="col-sm-9">
 							<label class="validation-message">Daily Allowance</label> <input
 								type="text" th:field="*{dailyAllowance}"
-								placeholder="Daily Allowance" class="form-control" />
+								placeholder="Daily Allowance" class="form-control" onkeyup="checkNumberWithPoint(this)" />
 								<label
 								th:if="${#fields.hasErrors('dailyAllowance')}"
 								th:errors="*{dailyAllowance}" class="validation-message"></label>
@@ -79,7 +104,7 @@
 						<div class="col-sm-9">
 							<label class="validation-message">Food Expense</label> 
 							 <input type="text" th:field="*{foodExpense}" placeholder="Food Expense"
-								class="form-control" />
+								class="form-control" onkeyup="checkNumberWithPoint(this)" />
 								<label
 								th:if="${#fields.hasErrors('foodExpense')}"
 								th:errors="*{foodExpense}" class="validation-message"></label>
@@ -92,7 +117,7 @@
 
 							<label class="validation-message">Cab Expense</label> <input
 								type="text" th:field="*{cabExpense}" placeholder="cabExpense"
-								class="form-control" /> <label
+								class="form-control" onkeyup="checkNumberWithPoint(this)" /> <label
 								th:if="${#fields.hasErrors('cabExpense')}"
 								th:errors="*{cabExpense}" class="validation-message"></label>
 						</div>
@@ -115,7 +140,7 @@
                         <div class="col-sm-9">
                         <label class="validation-message">Travel Date (DD/MM/YYYY)</label>
                          <input type="text" th:field="*{startDate}"
-                                placeholder="" class="form-control"  />
+                                placeholder="" class="form-control" onkeyup="checkOnlyDate(this)"   />
                             <label th:if="${#fields.hasErrors('startDate')}"
                                 th:errors="*{startDate}" class="validation-message"></label> 
 
@@ -126,7 +151,7 @@
                         <div class="col-sm-9">
                         <label class="validation-message">Expected Return Date (DD/MM/YYYY)</label>
                          <input type="text" th:field="*{endDate}"
-                                placeholder="" class="form-control"  />
+                                placeholder="" class="form-control" onkeyup="checkOnlyDate(this)"  />
                             <label th:if="${#fields.hasErrors('endDate')}"
                                 th:errors="*{endDate}" class="validation-message"></label>
                             

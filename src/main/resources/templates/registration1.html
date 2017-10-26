@@ -8,6 +8,63 @@
 	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/core.css}" />
     
+    
+        <script>
+function checkOnlyNumber(ob) {
+  var invalidChars = /[^0-9]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+
+function checkOnlyText(ob) {
+	  var invalidChars = /[^A-B]/gi
+	  if(invalidChars.test(ob.value)) {
+	            ob.value = ob.value.replace(invalidChars,"");
+	      }
+	}
+
+function checkNumberWithPoint(ob) {
+  var invalidChars = /[^0-9.]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+function checkOnlyDate(ob) {
+  var invalidChars = /[^0-9/]/gi
+  if(invalidChars.test(ob.value)) {
+            ob.value = ob.value.replace(invalidChars,"");
+      }
+}
+
+function onlyAlphabets(ob) {
+	 var invalidChars = /[^A-Za-z/]/
+	  if(invalidChars.test(ob.value)) {
+	            ob.value = ob.value.replace(invalidChars,"");
+	      }
+	}
+
+function onlyAlphabets1(e, t) {
+    try {
+        if (window.event) {
+            var charCode = window.event.keyCode;
+        }
+        else if (e) {
+            var charCode = e.which;
+        }
+        else { return true; }
+        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+            return true;
+        else
+            return false;
+    }
+    catch (err) {
+       // alert(err.Description);
+    }
+}
+</script>
+    
+    
 </head>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
@@ -38,7 +95,7 @@
 						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 								class="validation-message"></label>
 						<input type="text" th:field="*{name}" placeholder="First Name"
-								class="form-control" /> 
+								class="form-control" onkeypress="return onlyAlphabets(this);" /> 
 						</div>
 					</div>
 
