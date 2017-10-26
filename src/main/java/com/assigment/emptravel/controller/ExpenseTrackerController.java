@@ -18,6 +18,8 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -270,7 +272,21 @@ public class ExpenseTrackerController {
 		ModelAndView modelAndView = new ModelAndView() ;
 		ExpenseClaim expenseClaim= expenseClaimService.findById(id);
 		
+		
 		modelAndView.addObject("expenseClaim",expenseClaim);
+		
+		
+		
+		DateTime fromDate = new DateTime( expenseClaim.getFromDate());
+		DateTime toDate = new DateTime( expenseClaim.getToDate());
+		
+		int numberOfDays = Days.daysBetween(new LocalDate(fromDate), new LocalDate(toDate)).getDays() ;
+		
+		
+		modelAndView.addObject("permittedDailyAllowance",expenseClaim.getExpenseTracker().getDailyAllowance()*(numberOfDays+1));
+		modelAndView.addObject("permittedCabAllowance",expenseClaim.getExpenseTracker().getCabExpense()*(numberOfDays+1));
+		modelAndView.addObject("permittedFoodAllowance",expenseClaim.getExpenseTracker().getFoodExpense()*(numberOfDays+1));
+		
 		modelAndView.setViewName("/claimapproval");
 		modelAndView.addObject("role", util.getRole());
 		return modelAndView;	

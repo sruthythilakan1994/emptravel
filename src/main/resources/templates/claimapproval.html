@@ -172,11 +172,47 @@
 							<td th:text="${expenseClaim.foodAllawance}">Id</td>
 							<td th:text="${expenseClaim.cabAllawance}">Title</td>
 						</tr>
+				
+						
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<div class="panel-group" style="margin-top: 40px">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span>Permitted Amount</span>
+			</div>
+			<div class="panel-body">
+				<div class="panel-body">
+					<table class="table table-hover">
+						<tr>
+							<th>#</th>
+							<th>From Date (DD/MM/YYYY)</th>
+							<th>To Date (DD/MM/YYYY)</th>
+							<th>Per Diem</th>
+							<th>Food</th>
+							<th>Cab</th>						
+						</tr>
+
+						<tr>
+ 							<td th:text="${expenseClaim.id}">Id</td>
+                            <td th:text="${#dates.format(expenseClaim.fromDate, 'dd-MMM-yyyy')}" >Id</td>
+                            <td th:text="${#dates.format(expenseClaim.toDate, 'dd-MMM-yyyy')}" >Id</td>
+                            <td th:text="${permittedDailyAllowance}">Id</td>
+							<td th:text="${permittedFoodAllowance}">Id</td>
+							<td th:text="${permittedCabAllowance}">Title</td>
+						</tr>
+					
+					
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 	</div>
 
